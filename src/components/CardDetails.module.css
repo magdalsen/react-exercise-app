@@ -1,0 +1,9 @@
+.dot .avatar {
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    border: black solid;
+    margin: 5px 15px 5px 5px;
+    text-align: center;
+    line-height: 110px;
+}
