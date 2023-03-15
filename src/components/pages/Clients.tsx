@@ -1,26 +1,42 @@
-import { useQuery } from '@tanstack/react-query'
-import React, { useEffect, useState } from 'react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Card, CardProps } from '../Cards'
-import { FormValues } from '../Form'
 import { Wrapper } from '../Wrapper'
 
 const Clients = () => {
     const [client, setClient] = useState<CardProps[]>([]);
+    const queryClient = useQueryClient();
     const [currentCards, setCurrentCards] = useState<CardProps[]>(client);
 
     const fetchFn = async () => {
       const response = await fetch('http://localhost:8000/clients');
       const res = await response.json();
-      if (!res) {
-        throw new Error(res.error);
-      }
       const data = await res;
       setClient(data);
       return data;
     }
-    const {data,isLoading,error}=useQuery(["clients"],fetchFn);
-    console.log(data,isLoading);
+    const {data, isLoading, error}=useQuery(["clients"],fetchFn);
+
+    const mutation = useMutation(async ()=>{return await fetchFn()}, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["clients"]);
+      },
+      onError: () => {
+        throw new Error("Something went wrong :(");
+      }
+    });
+
+    useEffect(() => {
+      mutation.mutate(data);
+    }, []);
+
+    if(error){
+      return <p>Cannot get orders</p>
+    }
+    if (isLoading) {
+      return <p>Loading...</p>;
+    }
 
     const filterFn = (e:string) => {
         if(e===""){
@@ -48,7 +64,7 @@ const Clients = () => {
         />
         </div>
         <Wrapper>
-            {Object.values(client).map((el) => (
+            {data.map((el: CardProps) => (
             <Link to={`/clients/${el.id}`} key={el.id}>
                 <Card {...el} key={el.id} />
             </Link>

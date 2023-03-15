@@ -79,7 +79,7 @@
     },
     {
       "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-      "name": "dsfse",
+      "name": "katarzyna",
       "surname": "fdsfcsd",
       "street": "fdsfsd",
       "postCode": "66-666f",
@@ -90,8 +90,8 @@
     },
     {
       "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-      "name": "sdadsdas",
-      "surname": "dss",
+      "name": "rere2312",
+      "surname": "aaa",
       "street": "dfcsf",
       "postCode": "66-666",
       "town": "fdsfsd",
@@ -101,36 +101,14 @@
     },
     {
       "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-      "name": "fff",
-      "surname": "fff",
-      "street": "fff",
-      "postCode": "66-666",
-      "town": "fff",
-      "subRegion": "fff",
-      "phoneNumber": "+123123456789",
-      "id": 10
-    },
-    {
-      "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-      "name": "magda2222",
-      "surname": "sen222222",
-      "street": "vdfgvdx",
-      "postCode": "66-666",
-      "town": "bhjbhjbhnj",
-      "subRegion": "bjhbhj",
-      "phoneNumber": "+123123456789",
+      "name": "nowy2",
+      "surname": "test3",
+      "street": "aaha",
+      "postCode": "69-789",
+      "town": "DDD",
+      "subRegion": "dfs",
+      "phoneNumber": "+123456789",
       "id": 13
-    },
-    {
-      "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-      "name": "test",
-      "surname": "test",
-      "street": "test",
-      "postCode": "66-666",
-      "town": "test",
-      "subRegion": "test",
-      "phoneNumber": "+123123456789",
-      "id": 14
     }
   ],
   "orders": [

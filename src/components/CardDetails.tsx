@@ -2,13 +2,14 @@ import { Link} from "react-router-dom";
 import style from "./CardDetails.module.css";
 import { useParams } from "react-router-dom";
 import { CardProps } from "./Cards";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import { useQuery } from '@tanstack/react-query'
 
 export const CardDetails = () => {
     const { id } = useParams();
-    const [client, setClient] = useState<CardProps>([]);
+    const [client, setClient] = useState<CardProps[]>([]);
 
     const handleDelete = async () => {
         confirmAlert({
@@ -37,26 +38,36 @@ export const CardDetails = () => {
           }
      }
 
-     const showClientDetails = async () => {
-        const response = await fetch(`http://localhost:8000/clients/${id}`);
-        const res = response.json();
-        const data = await res;
-        return setClient(data);
+     const fetchFn = async () => {
+      const response =  await fetch(`http://localhost:8000/clients/${id}`)
+      const res =  await response.json();
+      const data =  await res;
+      setClient(data);
+      return data;
+    }
+
+     const {data,isLoading,error}=useQuery([`clients/${id}`],fetchFn);
+
+     if(error){
+       return <p>Cannot get orders</p>
      }
-     showClientDetails();
+     if (isLoading) {
+       return <p>Loading...</p>;
+     }
+
     return (
         <div>
             Informacje o wizytówce:
             <div>Id: {id}</div>
             <div>
-                <div className={style.dot}><img src={client.imgSrc} alt="avatar" className={style.avatar} /></div>
-                <div>Imię: {client.name}</div>
-                <div>Nazwisko: {client.surname}</div>
-                <div>Ulica: {client.street}</div>
-                <div>Kod pocztowy: {client.postCode}</div>
-                <div>Miasto: {client.town}</div>
-                <div>Województwo: {client.subRegion}</div>
-                <div>Numer telefonu: {client.phoneNumber}</div>
+                <div className={style.dot}><img src={data.imgSrc} alt="avatar" className={style.avatar} /></div>
+                <div>Imię: {data.name}</div>
+                <div>Nazwisko: {data.surname}</div>
+                <div>Ulica: {data.street}</div>
+                <div>Kod pocztowy: {data.postCode}</div>
+                <div>Miasto: {data.town}</div>
+                <div>Województwo: {data.subRegion}</div>
+                <div>Numer telefonu: {data.phoneNumber}</div>
             </div>
             <div>
                 <Link to={`/clients/${id}/edit`}>

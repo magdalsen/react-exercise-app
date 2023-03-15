@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import * as yup from "yup"
 import {InferType} from "yup"
 import style from "./Form.module.css"
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 const yupSchema=yup.object({
     imgSrc: yup.string().required("Obrazek musi być"),
@@ -19,7 +20,9 @@ const yupSchema=yup.object({
 export type FormValues = InferType<typeof yupSchema>;
 
 export const CardEdit = () => {
+    const [data, setData] = useState<FormValues>();
     const { id } = useParams();
+    const queryClient = useQueryClient();
     const [initialValues, setInitialValues] = useState({
         imgSrc: "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
         name: "",
@@ -39,7 +42,23 @@ export const CardEdit = () => {
         };
         fetch(`http://localhost:8000/clients/${id}`, requestOptions)
             .then(response => response.json())
-            .then(data => data)
+            .then(data => {
+                setData(data);
+                return data;
+            })
+    }
+
+    const mutation = useMutation(async (values:any)=>{return await updateClient(values)}, {
+      onSuccess: () => {
+        queryClient.invalidateQueries([`clients/${id}`]);
+      },
+      onError: ()=>{
+        throw new Error("Something went wrong :(");
+      }
+    });
+
+    const handleUpdatedData = () => {
+        mutation.mutate(data);
     }
 
     useEffect(() => {
@@ -146,7 +165,7 @@ export const CardEdit = () => {
                     />
                     <p style={{ color: "red" }}>{formik.errors.phoneNumber}</p>
                 </div>
-                <button type="submit">Zapisz zmiany</button>
+                <button type="submit" onClick={handleUpdatedData}>Zapisz zmiany</button>
                 <Link to={`/clients/${id}`}>
                     <button type="button">Wróć</button>
                 </Link>
