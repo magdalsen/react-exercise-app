@@ -80,7 +80,7 @@
     {
       "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
       "name": "katarzyna",
-      "surname": "fdsfcsd",
+      "surname": "nowakowska4",
       "street": "fdsfsd",
       "postCode": "66-666f",
       "town": "ffds",
@@ -90,8 +90,8 @@
     },
     {
       "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-      "name": "rere2312",
-      "surname": "aaa",
+      "name": "qwerty2",
+      "surname": "qwerty",
       "street": "dfcsf",
       "postCode": "66-666",
       "town": "fdsfsd",
@@ -101,7 +101,7 @@
     },
     {
       "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-      "name": "nowy2",
+      "name": "nowy9",
       "surname": "test3",
       "street": "aaha",
       "postCode": "69-789",
@@ -113,76 +113,28 @@
   ],
   "orders": [
     {
-      "title": "test",
-      "amount": 4,
-      "orderOwner": "Gniewomir Nowak",
-      "phoneNumber": "+123456789",
-      "id": 6,
-      "ownerId": [
-        {
-          "id": 4,
-          "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-          "name": "Gniewomir",
-          "surname": "Nowak",
-          "street": "TestStreet",
-          "postCode": "00-123",
-          "town": "Wrocław",
-          "subRegion": "małopolskie",
-          "phoneNumber": "+48 123 456 789"
-        }
-      ]
-    },
-    {
-      "title": "qqq",
-      "amount": 2,
-      "orderOwner": "Henryk Sienkiewicz",
+      "title": "wtre",
+      "amount": 6,
+      "orderOwner": "nowy8 test3",
       "phoneNumber": "+123123456789",
-      "id": 12,
-      "ownerId": [
-        {
-          "id": 2,
-          "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-          "name": "Henryk",
-          "surname": "Sienkiewicz",
-          "street": "TestStreet",
-          "postCode": "00-123",
-          "town": "Warszawa",
-          "subRegion": "mazowieckie",
-          "phoneNumber": "+48 123 456 789"
-        }
-      ]
+      "ownerId": 13,
+      "id": 33
     },
     {
-      "id": 13
-    },
-    {
-      "id": 14
-    },
-    {
-      "id": 15
-    },
-    {
-      "id": 16
-    },
-    {
-      "title": "frefre",
+      "title": "ee",
       "amount": 4,
-      "orderOwner": "Henryk Sienkiewicz",
+      "orderOwner": "qwerty qwerty",
       "phoneNumber": "+123123456789",
-      "id": 10,
-      "ownerId": [
-        {
-          "id": 2,
-          "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-          "name": "Henryk",
-          "surname": "Sienkiewicz",
-          "street": "TestStreet",
-          "postCode": "00-123",
-          "town": "Warszawa",
-          "subRegion": "mazowieckie",
-          "phoneNumber": "+48 123 456 789"
-        }
-      ]
+      "ownerId": 9,
+      "id": 34
+    },
+    {
+      "title": "ee2",
+      "amount": 4,
+      "orderOwner": "qwerty qwerty",
+      "phoneNumber": "+123123456789",
+      "ownerId": 9,
+      "id": 35
     }
   ]
 }

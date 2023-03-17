@@ -32,7 +32,7 @@ const Clients = () => {
     }, []);
 
     if(error){
-      return <p>Cannot get orders</p>
+      return <p>Cannot get data</p>
     }
     if (isLoading) {
       return <p>Loading...</p>;

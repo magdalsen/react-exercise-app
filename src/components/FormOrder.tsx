@@ -1,5 +1,5 @@
+import { useQuery } from "@tanstack/react-query";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
 import * as yup from "yup"
 import {InferType} from "yup"
 import { CardProps } from "./Cards";
@@ -15,31 +15,26 @@ const yupSchema=yup.object({
 export type FormValues = InferType<typeof yupSchema>;
 
 export const FormOrder = () => {
-    const [order, setOrder] = useState<FormValues[]>([]);
-    const [client, setClient] = useState<CardProps[]>([]);
-    const [postData, setPostId] = useState();
-    const singleOrder = {...order};
+    const addOrder = async (values:FormValues) => {
+        const response = await fetch(`http://localhost:8000/orders`, {
+          method: "POST",
+           headers: {"Content-type": "application/json;charset=UTF-8"},
+          body: JSON.stringify(values),
+        });
+        if (!response.ok) {
+          return {};
+        }
+        const data = await response.json();
+        return data;
+    }
 
-    useEffect(() => {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(singleOrder[0])
-        };
-        fetch('http://localhost:8000/orders', requestOptions)
-            .then(response => response.json())
-            .then(data => setPostId(data))
-    }, [order]);
-
-    useEffect(() => {
-        fetch('http://localhost:8000/clients')
-          .then(res => {
-            return res.json();
-          })
-          .then((data) => {
-            setClient(data);
-          })
-      }, []);
+    const fetchFn = async () => {
+        const response = await fetch('http://localhost:8000/clients');
+        const res = await response.json();
+        const data = await res;
+        return data;
+    }
+    const {data, isLoading, error}=useQuery<CardProps[]>(["clients"],fetchFn);
 
     const formik = useFormik<FormValues>({
     initialValues: {
@@ -49,16 +44,25 @@ export const FormOrder = () => {
       phoneNumber: ""
     },
     onSubmit: (values:FormValues) => {
-        const ownerId = client.filter((el)=>{
-            if ((el.name).concat(" ", el.surname) === values.orderOwner) {
+        const ownerIdFilter = data && data.filter((el)=>{
+            if (`${el.name} ${el.surname}` === values.orderOwner) {
                 return el.id;
             }
-        })
-        setOrder(prev=>[{...values, id: Math.floor(Math.random() * 10) + 4, ownerId}]);
+        });
+        const ownerId = ownerIdFilter && ownerIdFilter[0].id;
+        const id = {ownerId};
+        addOrder({...values, ...id});
         alert(`Order ${values.title} added!`);
     },
     validationSchema: yupSchema,
   });
+
+  if(error){
+    return <p>Cannot get data</p>
+  }
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <>
@@ -90,8 +94,8 @@ export const FormOrder = () => {
             <div>
                 <label htmlFor="orderOwner">Order Owner</label>
                 <select name="orderOwner" id="orderOwner" value={formik.values.orderOwner} onChange={formik.handleChange}>
-                    {client.map((el)=>( 
-                            <option>{(el.name).concat(" ", el.surname)}</option>
+                    {data && data.map((el)=>( 
+                            <option>{`${el.name} ${el.surname}`}</option>
                     ))}
                 </select>
             </div>
