@@ -80,7 +80,7 @@
     {
       "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
       "name": "katarzyna",
-      "surname": "nowakowska4",
+      "surname": "nowakowska6",
       "street": "fdsfsd",
       "postCode": "66-666f",
       "town": "ffds",
@@ -101,7 +101,7 @@
     },
     {
       "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-      "name": "nowy9",
+      "name": "nowy12",
       "surname": "test3",
       "street": "aaha",
       "postCode": "69-789",
@@ -135,6 +135,22 @@
       "phoneNumber": "+123123456789",
       "ownerId": 9,
       "id": 35
+    },
+    {
+      "title": "asdf",
+      "amount": 2,
+      "orderOwner": "katarzyna nowakowska4",
+      "phoneNumber": "+123123456789",
+      "ownerId": 6,
+      "id": 36
+    },
+    {
+      "title": "mmm",
+      "amount": 6,
+      "orderOwner": "nowy9 test3",
+      "phoneNumber": "+123123456789",
+      "ownerId": 13,
+      "id": 37
     }
   ]
 }
