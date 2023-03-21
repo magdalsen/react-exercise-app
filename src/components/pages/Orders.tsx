@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Order, OrderProps } from '../Order'
+import { Order, OrderProps } from '../Orders/Order'
 import { Wrapper } from '../Wrapper'
 import style from "./Orders.module.css"
 
@@ -55,7 +55,6 @@ const Orders = () => {
               </div>
             ))}
         </Wrapper>
-
     </div>
   )
 }

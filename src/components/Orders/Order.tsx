@@ -1,6 +1,5 @@
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import style from "./Order.module.css";
-import { CardDetails } from "./CardDetails";
 
 export interface OrderProps {
   id:number;
