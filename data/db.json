@@ -1,17 +1,6 @@
 {
   "clients": [
     {
-      "id": 1,
-      "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-      "name": "Henryk",
-      "surname": "Herbert",
-      "street": "TestStreet",
-      "postCode": "00-123",
-      "town": "Poznań",
-      "subRegion": "wielkopolskie",
-      "phoneNumber": "+48 123 456 789"
-    },
-    {
       "id": 2,
       "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
       "name": "Henryk",
@@ -21,17 +10,6 @@
       "town": "Warszawa",
       "subRegion": "mazowieckie",
       "phoneNumber": "+48 123 456 789"
-    },
-    {
-      "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-      "name": "Wisława2",
-      "surname": "Szymborska2",
-      "street": "Polska 5",
-      "postCode": "32-098",
-      "town": "Wrocław",
-      "subRegion": "jakieśtam",
-      "phoneNumber": "+123456789",
-      "id": 3
     },
     {
       "id": 5,
@@ -46,8 +24,8 @@
     },
     {
       "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-      "name": "Maja",
-      "surname": "Nowak",
+      "name": "Maja2",
+      "surname": "Nowak2",
       "street": "Podlaska",
       "postCode": "12-234",
       "town": "Poznań",
@@ -57,58 +35,14 @@
     },
     {
       "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-      "name": "cdsvcsd",
-      "surname": "vdsvdxfcvdf",
-      "street": "mmmmmmmmmmmm",
-      "postCode": "66-666",
-      "town": "bhjbhjbhnj",
-      "subRegion": "vfdvdf",
-      "phoneNumber": "+123456789",
-      "id": 12
-    },
-    {
-      "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-      "name": "bbbb2222",
-      "surname": "bbbbb",
-      "street": "bbbbb",
-      "postCode": "66-666",
-      "town": "nnnn",
-      "subRegion": "fvfd",
-      "phoneNumber": "+123456789",
-      "id": 8
-    },
-    {
-      "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
       "name": "katarzyna",
       "surname": "nowakowska9",
       "street": "fdsfsd",
       "postCode": "66-666f",
       "town": "ffds",
       "subRegion": "fdfvds",
-      "phoneNumber": "+123123456789",
+      "phoneNumber": "+987654321",
       "id": 6
-    },
-    {
-      "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-      "name": "qwerty3",
-      "surname": "qwerty1234",
-      "street": "dfcsf",
-      "postCode": "66-666",
-      "town": "fdsfsd",
-      "subRegion": "fdfsd",
-      "phoneNumber": "+123123456789",
-      "id": 9
-    },
-    {
-      "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-      "name": "nowy14",
-      "surname": "test8",
-      "street": "aaha",
-      "postCode": "69-789",
-      "town": "DDD",
-      "subRegion": "dfs",
-      "phoneNumber": "+123456789",
-      "id": 13
     }
   ],
   "orders": [

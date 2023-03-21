@@ -50,7 +50,7 @@ export const CardEdit = () => {
 
     const mutation = useMutation(async (values:any)=>{return await updateClient(values)}, {
       onSuccess: () => {
-        queryClient.invalidateQueries([`clients/${id}`]);
+        queryClient.invalidateQueries(['clients']);
       },
       onError: ()=>{
         throw new Error("Something went wrong :(");

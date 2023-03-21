@@ -1,24 +1,36 @@
 import { Link} from "react-router-dom";
 import style from "./CardDetails.module.css";
 import { useParams } from "react-router-dom";
-import { CardProps } from "./Cards";
+import { CardProps } from "../Cards";
 import { useState } from "react";
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import { useQuery } from '@tanstack/react-query'
+import { useQuery,useMutation,useQueryClient } from '@tanstack/react-query'
+import { deletePerson,getClientById } from "src/api/clients";
 
 export const CardDetails = () => {
     const { id } = useParams();
-    const [client, setClient] = useState<CardProps[]>([]);
+    const queryClient= useQueryClient()
 
-    const handleDelete = async () => {
+
+    const mutation = useMutation(async (id:string)=>{return await deletePerson(id)}, {
+      onSuccess: () => {
+        queryClient.invalidateQueries();
+      },
+      onError: ()=>{
+        throw new Error("Something went wrong :(");
+      }
+    });
+
+
+    const handleDelete = async (id:string) => {
         confirmAlert({
             title: 'Confirm to delete Client',
             message: 'Are you sure to do this?',
             buttons: [
               {
                 label: 'Yes',
-                onClick: () => deletePerson()
+                onClick: () => mutation.mutate(id)
               },
               {
                 label: 'No',
@@ -26,31 +38,19 @@ export const CardDetails = () => {
               }
             ]
           });
-          const deletePerson = async () => {
-            alert('Client deleted!');
-            const response = await fetch(`http://localhost:8000/clients/${id}`, {
-                method: "DELETE",
-                  headers: { "Content-type": "application/json;charset=UTF-8" },
-                  body: JSON.stringify(client)
-            })
-              const data = await response.json();
-              return data;
-          }
+          
      }
 
-     const fetchFn = async () => {
-      const response =  await fetch(`http://localhost:8000/clients/${id}`)
-      const res =  await response.json();
-      const data =  await res;
-      setClient(data);
-      return data;
-    }
-
-     const {data,isLoading,error}=useQuery([`clients/${id}`],fetchFn);
-
-     if(error){
+     const {data,isLoading,error}=useQuery(['client',id],()=>{
+      if(id)
+      return getClientById(id)
+    },{
+      enabled: !!id
+     });
+     if(error || !id){
        return <p>Cannot get orders</p>
      }
+
      if (isLoading) {
        return <p>Loading...</p>;
      }
@@ -73,7 +73,7 @@ export const CardDetails = () => {
                 <Link to={`/clients/${id}/edit`}>
                     <button type="button">Edit</button>
                 </Link>
-                <button type="button" onClick={handleDelete}>Delete</button>
+                <button type="button" onClick={()=>handleDelete(id)}>Delete</button>
                 <Link to="/clients">
                     <button type="button">Back</button>
                 </Link>
