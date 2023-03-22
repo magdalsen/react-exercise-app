@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as yup from "yup"
 import {InferType} from "yup"
-import style from "./Form.module.css"
+import style from "../CardForm/CardForm.module.css"
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 const yupSchema=yup.object({

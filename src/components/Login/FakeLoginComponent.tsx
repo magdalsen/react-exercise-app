@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import * as yup from "yup"
 import {InferType} from "yup"
 import { FakeRegisterComponent } from "./FakeRegisterComponent";
-import style from "../Cards/Form.module.css"
+import style from "../Cards/CardForm/CardForm.module.css"
 
 const yupSchema=yup.object({
   login: yup.string().email('Invalid email').required('E-mail required!'),

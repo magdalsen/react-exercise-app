@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as yup from "yup"
 import {InferType} from "yup"
-import { CardProps } from "../Cards/Cards";
-import style from "../Cards/Form.module.css"
+import { CardProps } from "../../Cards/Cards";
+import style from "../../Cards/CardForm/CardForm.module.css"
 
 const yupSchema=yup.object({
   title: yup.string().required("Uzupełnij tytuł!"),

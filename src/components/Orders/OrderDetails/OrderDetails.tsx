@@ -2,7 +2,7 @@ import { Link} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import { OrderProps } from "./Order";
+import { OrderProps } from "../Order";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const OrderDetails = () => {

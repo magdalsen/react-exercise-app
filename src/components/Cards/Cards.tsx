@@ -1,5 +1,5 @@
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import style from "./Card.module.css";
+import style from "./Cards.module.css";
 import { CardDetails } from "./CardDetails/CardDetails";
 
 export interface CardProps {

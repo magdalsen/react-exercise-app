@@ -1,13 +1,13 @@
 import './App.css'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Form } from '../src/components/Cards/Form';
+import { Form } from './components/Cards/CardForm/CardForm';
 import { Header } from './components/Header';
 import { CardDetails } from './components/Cards/CardDetails/CardDetails';
-import { CardEdit } from './components/Cards/CardEdit';
+import { CardEdit } from './components/Cards/CardEdit/CardEdit';
 import Clients from './components/pages/Clients';
 import Orders from './components/pages/Orders';
-import { FormOrder } from './components/Orders/FormOrder';
-import { OrderDetails } from './components/Orders/OrderDetails';
+import { FormOrder } from './components/Orders/OrderForm/OrderForm';
+import { OrderDetails } from './components/Orders/OrderDetails/OrderDetails';
 import { FakeLoginComponent } from './components/Login/FakeLoginComponent';
 import { FakeRegisterComponent } from './components/Login/FakeRegisterComponent';
 import {

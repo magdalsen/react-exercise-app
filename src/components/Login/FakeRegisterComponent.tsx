@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import * as yup from "yup"
 import {InferType} from "yup"
-import style from "../Cards/Form.module.css"
+import style from "../Cards/CardForm/CardForm.module.css"
 
 const yupSchema=yup.object({
   name: yup.string().min(3, 'Min 3 characters!').required("Name required!"),

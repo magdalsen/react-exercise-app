@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
 import * as yup from "yup"
 import {InferType} from "yup"
-import style from "./Form.module.css"
+import style from "./CardForm.module.css"
 
 const yupSchema=yup.object({
   imgSrc: yup.string().required("Obrazek musi być"),
