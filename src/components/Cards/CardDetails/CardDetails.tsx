@@ -2,18 +2,30 @@ import { Link} from "react-router-dom";
 import style from "./CardDetails.module.css";
 import { useParams } from "react-router-dom";
 import { CardProps } from "../Cards";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useQuery,useMutation,useQueryClient } from '@tanstack/react-query'
-import { deletePerson,getClientById } from "src/api/clients";
+import { deletePerson,getClientById } from "../../../api/clients";
 
 export const CardDetails = () => {
     const { id } = useParams();
     const queryClient= useQueryClient()
 
-
     const mutation = useMutation(async (id:string)=>{return await deletePerson(id)}, {
+      onSuccess: () => {
+        queryClient.invalidateQueries();
+      },
+      onError: ()=>{
+        throw new Error("Something went wrong :(");
+      }
+    });
+
+    useEffect(()=>{
+      mutation2.mutate(data)
+    }, [])
+
+    const mutation2 = useMutation(async (id:string)=>{return await getClientById(id)}, {
       onSuccess: () => {
         queryClient.invalidateQueries();
       },
@@ -47,6 +59,7 @@ export const CardDetails = () => {
     },{
       enabled: !!id
      });
+     
      if(error || !id){
        return <p>Cannot get orders</p>
      }

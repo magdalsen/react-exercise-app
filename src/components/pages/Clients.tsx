@@ -5,45 +5,37 @@ import { Card, CardProps } from '../Cards/Cards'
 import { Wrapper } from '../Wrapper'
 
 const Clients = () => {
-   // const [client, setClient] = useState<CardProps[]>([]);
     const queryClient = useQueryClient();
     const [currentCards, setCurrentCards] = useState<CardProps[]>([]);
     
-
     const fetchFn = async () => {
       const response = await fetch('http://localhost:8000/clients');
       const res = await response.json();
       const data = await res;
-     // setClient(data);
-      return data as CardProps[];
+      return data;
     }
     const {data:clients, isLoading, error}=useQuery(["clients"],fetchFn);
 
     useEffect(()=>{
-      setCurrentCards(clients || [])
+      setCurrentCards(clients || []);
+      mutation.mutate(clients || []);
     },[clients])
 
 
-    // const mutation = useMutation(async ()=>{return await fetchFn()}, {
-    //   onSuccess: () => {
-    //     queryClient.invalidateQueries(["clients"]);
-    //   },
-    //   onError: () => {
-    //     throw new Error("Something went wrong :(");
-    //   }
-    // });
-
-    // useEffect(() => {
-    //   mutation.mutate(client);
-    // }, []);
-
-   
+    const mutation = useMutation(async ()=>{return await fetchFn()}, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["clients"]);
+      },
+      onError: () => {
+        throw new Error("Something went wrong :(");
+      }
+    });   
 
     const filterFn = (e:string) => {
         if(e===""){
           setCurrentCards(clients || [])
         }else{
-          const newCards=clients?.filter((el) => {
+          const newCards=clients?.filter((el: { name: string; surname: string }) => {
             let equal = (e === el.name + ' ' + el.surname);
             if (e === el.name || e === el.surname || equal){
               return el

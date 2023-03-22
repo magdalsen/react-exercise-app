@@ -1,6 +1,6 @@
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import style from "./Card.module.css";
-import { CardDetails } from "./CardDetails";
+import { CardDetails } from "./CardDetails/CardDetails";
 
 export interface CardProps {
   id:number;

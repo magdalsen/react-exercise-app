@@ -2,7 +2,7 @@ import './App.css'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Form } from '../src/components/Cards/Form';
 import { Header } from './components/Header';
-import { CardDetails } from './components/Cards/CardDetails';
+import { CardDetails } from './components/Cards/CardDetails/CardDetails';
 import { CardEdit } from './components/Cards/CardEdit';
 import Clients from './components/pages/Clients';
 import Orders from './components/pages/Orders';

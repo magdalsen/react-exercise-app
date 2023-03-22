@@ -10,38 +10,28 @@ export const OrderDetails = () => {
     const queryClient = useQueryClient();
 
     const fetchFn = async () => {
-        const response =  await fetch(`http://localhost:8000/orders/${id}`)
-        const res =  await response.json();
-        const data =  await res;
-        return data;
-      }
-      const {data,isLoading,error}=useQuery([`orders/${id}`],fetchFn);
-    
-      const fetchFn2 = async () => {       
-        const response =  await fetch(`http://localhost:8000/orders/${id}`)
-        const res =  await response.json();
-        const data =  await res;
-        const response2 = await fetch(`http://localhost:8000/clients/${data.ownerId}`);
-        const res2 = await response2.json();
-        const data2 = await res2;
-        return data2;
-      }
-      const {data:data2}=useQuery([`clients/${data && data.ownerId}`],fetchFn2);
+      const response =  await fetch(`http://localhost:8000/orders/${id}`)
+      const order =  await response.json();
+      const response2 = await fetch(`http://localhost:8000/clients/${order.ownerId}`);
+      const client = await response2.json();
+      return [order,client];
+    }
+    const {data,isLoading,error}=useQuery(['orders',id],fetchFn);
 
-    useEffect(() => {
-        mutation.mutate(data);
-      }, []);
+    useEffect(()=>{
+      mutation.mutate(data && data[0] || [])
+    }, [data])
 
        const mutation = useMutation(async ()=>{return await fetchFn()}, {
         onSuccess: () => {
-          queryClient.invalidateQueries([`orders/${id}`]);
+          queryClient.invalidateQueries(['orders',id]);
         },
         onError: () => {
           throw new Error("Something went wrong :(");
         }
       });
 
-      if(error){
+      if(error || !data){
         return <p>Cannot get orders</p>
       }
       if (isLoading) {
@@ -53,13 +43,13 @@ export const OrderDetails = () => {
             Informacje o zamówieniu:
             <div>
                 <div>Order Id: {id}</div>
-                <div>Name: {data.title}</div>
-                <div>Amount: {data.amount}</div>
-                <div>Who ordered: {data2?.name} {data2?.surname}</div>
-                <div>Phone: {data.phoneNumber}</div>
+                <div>Name: {data[0].title}</div>
+                <div>Amount: {data[0].amount}</div>
+                <div>Who ordered: {data[1].name} {data[1].surname}</div>
+                <div>Phone: {data[0].phoneNumber}</div>
             </div>
             <div>
-                <Link to={`/clients/${data.ownerId}`}>
+                <Link to={`/clients/${data[0].ownerId}`}>
                     <button type="button">Show Client</button>
                 </Link>
                 <Link to="/orders">
