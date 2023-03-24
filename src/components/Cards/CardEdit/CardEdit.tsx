@@ -5,6 +5,7 @@ import * as yup from "yup"
 import {InferType} from "yup"
 import style from "../CardForm/CardForm.module.css"
 import { useQueryClient, useMutation } from "@tanstack/react-query";
+import { FormInput } from "../FormInput";
 
 const yupSchema=yup.object({
     imgSrc: yup.string().required("Obrazek musi być"),
@@ -87,84 +88,13 @@ export const CardEdit = () => {
             Edycja wizytówki o id: {id}
 
             <form className={style.form} onSubmit={formik.handleSubmit}>
-                <div>
-                    <label htmlFor="name">Name</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        onChange={formik.handleChange}
-                        value={formik.values.name}
-                    />
-                    {formik.touched.name && formik.errors.name ? (
-                    <p style={{ color: "red" }}>{formik.errors.name}</p>
-                    ) : null}
-                </div>
-                <div>
-                    <label htmlFor="surname">Surname</label>
-                    <input
-                        type="text"
-                        id="surname"
-                        name="surname"
-                        onChange={formik.handleChange}
-                        value={formik.values.surname}
-                    />
-                    <p style={{ color: "red" }}>{formik.errors.surname}</p>
-                </div>
-                <div>
-                    <label htmlFor="street">Street</label>
-                    <input
-                        type="text"
-                        id="street"
-                        name="street"
-                        onChange={formik.handleChange}
-                        value={formik.values.street}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="postCode">Post code</label>
-                    <input
-                    type="text"
-                    id="postCode"
-                    name="postCode"
-                    onChange={formik.handleChange}
-                    value={formik.values.postCode}
-                    />
-                    <p style={{ color: "red" }}>{formik.errors.postCode}</p>
-                </div>
-                <div>
-                    <label htmlFor="town">Miasto</label>
-                    <input
-                    type="text"
-                    id="town"
-                    name="town"
-                    onChange={formik.handleChange}
-                    value={formik.values.town}
-                    />
-                    <p style={{ color: "red" }}>{formik.errors.town}</p>
-                </div>
-                <div>
-                    <label htmlFor="subRegion">Województwo</label>
-                    <input
-                    type="text"
-                    id="subRegion"
-                    name="subRegion"
-                    onChange={formik.handleChange}
-                    value={formik.values.subRegion}
-                    />
-                    <p style={{ color: "red" }}>{formik.errors.subRegion}</p>
-                </div>
-                <div>
-                    <label htmlFor="phoneNumber">Numer telefonu</label>
-                    <input
-                    type="text"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    onChange={formik.handleChange}
-                    value={formik.values.phoneNumber}
-                    />
-                    <p style={{ color: "red" }}>{formik.errors.phoneNumber}</p>
-                </div>
+                <FormInput formik={formik} accessor='name' />
+                <FormInput formik={formik} accessor='surname' />
+                <FormInput formik={formik} accessor='street' />
+                <FormInput formik={formik} accessor='postCode' />
+                <FormInput formik={formik} accessor='town' />
+                <FormInput formik={formik} accessor='subRegion' />
+                <FormInput formik={formik} accessor='phoneNumber' />
                 <button type="submit" onClick={handleUpdatedData}>Zapisz zmiany</button>
                 <Link to={`/clients/${id}`}>
                     <button type="button">Wróć</button>

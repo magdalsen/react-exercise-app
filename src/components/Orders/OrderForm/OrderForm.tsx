@@ -3,7 +3,8 @@ import { useFormik } from "formik";
 import * as yup from "yup"
 import {InferType} from "yup"
 import { CardProps } from "../../Cards/Cards";
-import style from "../../Cards/CardForm/CardForm.module.css"
+import style from "../../Cards/CardForm/CardForm.module.css";
+import { FormInput, FormSelect } from "../FormInput";
 
 const yupSchema=yup.object({
   title: yup.string().required("Uzupełnij tytuł!"),
@@ -67,49 +68,10 @@ export const FormOrder = () => {
   return (
     <>
         <form className={style.form} onSubmit={formik.handleSubmit}>
-            <div>
-                <label htmlFor="title">Title</label>
-                <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    onChange={formik.handleChange}
-                    value={formik.values.title}
-                />
-                {formik.touched.title && formik.errors.title ? (
-                <p style={{ color: "red" }}>{formik.errors.title}</p>
-                ) : null}
-            </div>
-            <div>
-                <label htmlFor="amount">Amount</label>
-                <input
-                    type="number"
-                    id="amount"
-                    name="amount"
-                    onChange={formik.handleChange}
-                    value={formik.values.amount}
-                />
-                <p style={{ color: "red" }}>{formik.errors.amount}</p>
-            </div>
-            <div>
-                <label htmlFor="orderOwner">Order Owner</label>
-                <select name="orderOwner" id="orderOwner" value={formik.values.orderOwner} onChange={formik.handleChange}>
-                    {data && data.map((el)=>( 
-                            <option>{`${el.name} ${el.surname}`}</option>
-                    ))}
-                </select>
-            </div>
-            <div>
-                <label htmlFor="phoneNumber">Phone number</label>
-                <input
-                type="text"
-                id="phoneNumber"
-                name="phoneNumber"
-                onChange={formik.handleChange}
-                value={formik.values.phoneNumber}
-                />
-                <p style={{ color: "red" }}>{formik.errors.phoneNumber}</p>
-            </div>
+            <FormInput formik={formik} accessor='title' />
+            <FormInput formik={formik} accessor='amount' />
+            <FormSelect formik={formik} accessor='orderOwner' data={data} />
+            <FormInput formik={formik} accessor='phoneNumber' />
             <button type="submit">Save</button>
         </form>
     </>
