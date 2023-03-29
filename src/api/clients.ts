@@ -15,3 +15,12 @@ export const deletePerson = async (id:string) => {
               const data = await response.json();
               return data;
           }
+
+export const deleteOrder = async (id:string) => {
+            alert('Order deleted!');
+            const response = await fetch(`http://localhost:8000/orders/${id}`, {
+                method: "DELETE",
+            })
+              const data = await response.json();
+              return data;
+}

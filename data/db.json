@@ -158,14 +158,6 @@
       "phoneNumber": "+123456755",
       "ownerId": 8,
       "id": 48
-    },
-    {
-      "title": "test1234",
-      "amount": "3",
-      "orderOwner": "aaa3111 aaa3",
-      "phoneNumber": "+123456789",
-      "ownerId": 13,
-      "id": 49
     }
   ],
   "register": [
@@ -368,6 +360,22 @@
       "password": "Haslo1234@",
       "confirm": "Haslo1234@",
       "id": 25
+    },
+    {
+      "name": "magda",
+      "surname": "abc",
+      "login": "magdal.sen@gmail.com",
+      "password": "Haslo1234@",
+      "confirm": "Haslo1234@",
+      "id": 26
+    },
+    {
+      "name": "magda",
+      "surname": "aaa",
+      "login": "magdal.sen@gmail.com",
+      "password": "Haslo1234@",
+      "confirm": "Haslo1234@",
+      "id": 27
     }
   ]
 }

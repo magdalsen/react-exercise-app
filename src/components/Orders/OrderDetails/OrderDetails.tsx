@@ -1,9 +1,10 @@
 import { Link} from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import { OrderProps } from "../Order";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { confirmAlert } from "react-confirm-alert";
+import { deleteOrder } from "../../../api/clients";
 
 const OrderDetails = () => {
     const { id } = useParams();
@@ -31,12 +32,38 @@ const OrderDetails = () => {
         }
       });
 
-      if(error || !data){
-        return <p>Cannot get orders</p>
-      }
-      if (isLoading) {
-        return <p>Loading...</p>;
-      }
+      const mutation2 = useMutation(async (id:string)=>{return await deleteOrder(id)}, {
+        onSuccess: () => {
+          queryClient.invalidateQueries();
+        },
+        onError: ()=>{
+          throw new Error("Something went wrong :(");
+        }
+      });
+
+      const handleDelete = async (id:string) => {
+        confirmAlert({
+            title: 'Confirm to delete Order',
+            message: 'Are you sure to do this?',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => mutation2.mutate(id)
+              },
+              {
+                label: 'No',
+                onClick: () => alert('Order not deleted.')
+              }
+            ]
+          });
+     }
+
+     if(error || !data){
+      return <p>Cannot get orders</p>
+    }
+    if (isLoading) {
+      return <p>Loading...</p>;
+    }
 
     return (
         <div>
@@ -52,6 +79,7 @@ const OrderDetails = () => {
                 <Link to={`/clients/${data[0].ownerId}`}>
                     <button type="button">Show Client</button>
                 </Link>
+                <button type="button" onClick={()=>handleDelete(id)}>Delete</button>
                 <Link to="/orders">
                     <button type="button">Back</button>
                 </Link>
