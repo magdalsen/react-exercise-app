@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, createContext, useState } from "react"
+import FakeLoginComponent from "../components/Login/FakeLoginComponent";
 import { getSafeContext } from "./getSafeContext";
 
 type User = {
@@ -29,14 +30,16 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const login=(username:string,password:string)=>{
     const currentUser=users.find(user=>user.login===username)
     if(currentUser && currentUser.password===password){
-      setIsLogged(true)
+      setIsLogged(true);
+      alert('Logged in!');
       return true;
     }
+    alert('Register first!');
     return false;
   }
 
   const logOut=()=>{
-     setIsLogged(false)
+     setIsLogged(false);
   }
 
     return (

@@ -4,7 +4,7 @@ import { FormValues } from "./OrderForm/OrderForm";
 import InputLabel from '@mui/material/InputLabel';
 import { CardProps } from "../Cards/Cards";
 
-export function FormInpu<T>({
+export function FormInput<T>({
     formik,
     accessor,
   }: {

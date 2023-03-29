@@ -55,7 +55,7 @@ const FakeRegisterComponent = () => {
     },
     onSubmit: (values:FormValues) => {
         addClient(values);
-        alert(`Client ${values.login} logged in!`);
+        alert(`Client ${values.login} registered!`);
     },
     validationSchema: yupSchema,
   });

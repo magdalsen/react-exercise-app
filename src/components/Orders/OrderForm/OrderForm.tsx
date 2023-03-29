@@ -5,6 +5,7 @@ import {InferType} from "yup"
 import { CardProps } from "../../Cards/Cards";
 import style from "../../Cards/CardForm/CardForm.module.css";
 import { FormInput, FormSelect } from "../FormInput";
+import LoginWrapper from "../../../components/LoginWrapper";
 
 const yupSchema=yup.object({
   title: yup.string().required("Uzupełnij tytuł!"),
@@ -67,6 +68,7 @@ const FormOrder = () => {
 
   return (
     <>
+      <LoginWrapper>
         <form className={style.form} onSubmit={formik.handleSubmit}>
             <FormInput formik={formik} accessor='title' />
             <FormInput formik={formik} accessor='amount' />
@@ -74,6 +76,7 @@ const FormOrder = () => {
             <FormInput formik={formik} accessor='phoneNumber' />
             <button type="submit">Save</button>
         </form>
+      </LoginWrapper>
     </>
   )
 }

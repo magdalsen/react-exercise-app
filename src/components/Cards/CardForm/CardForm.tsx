@@ -3,6 +3,7 @@ import { FormInput } from "../FormInput";
 import * as yup from "yup"
 import {InferType} from "yup"
 import style from "./CardForm.module.css"
+import LoginWrapper from "../../../components/LoginWrapper";
 
 const yupSchema=yup.object({
   imgSrc: yup.string().required("Obrazek musi być"),
@@ -52,6 +53,7 @@ const Form = () => {
 
   return (
     <>
+      <LoginWrapper>
         <form className={style.form} onSubmit={formik.handleSubmit}>
             <FormInput formik={formik} accessor='name' />
             <FormInput formik={formik} accessor='surname' />
@@ -62,6 +64,7 @@ const Form = () => {
             <FormInput formik={formik} accessor='phoneNumber' />
             <button type="submit">Zapisz</button>
         </form>
+      </LoginWrapper>
     </>
   )
 }

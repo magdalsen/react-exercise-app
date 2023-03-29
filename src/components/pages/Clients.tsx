@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Card, CardProps } from '../Cards/Cards'
+import LoginWrapper from '../LoginWrapper'
 import { Wrapper } from '../Wrapper'
 
 const Clients = () => {
@@ -53,15 +54,15 @@ const Clients = () => {
     }
 
   return (
-
      <div>
+      <LoginWrapper>
         <div>
-        <label htmlFor="name">Filter:</label>
-        <input
-            type="text"
-            name="name"
-            onChange={(e) => filterFn(e.target.value)}
-        />
+          <label htmlFor="name">Filter:</label>
+          <input
+              type="text"
+              name="name"
+              onChange={(e) => filterFn(e.target.value)}
+          />
         </div>
         <Wrapper>
             {currentCards.map((el: CardProps) => (
@@ -70,8 +71,8 @@ const Clients = () => {
             </Link>
             ))}
         </Wrapper>
+      </LoginWrapper>
     </div>
-
   )
 }
 
