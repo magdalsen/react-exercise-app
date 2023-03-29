@@ -5,7 +5,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import { OrderProps } from "../Order";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-export const OrderDetails = () => {
+const OrderDetails = () => {
     const { id } = useParams();
     const queryClient = useQueryClient();
 
@@ -59,3 +59,5 @@ export const OrderDetails = () => {
         </div>
     )
 }
+
+export default OrderDetails

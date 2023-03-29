@@ -150,6 +150,32 @@
       "phoneNumber": "+123456755",
       "ownerId": 11,
       "id": 47
+    },
+    {
+      "title": "wewewe",
+      "amount": "2",
+      "orderOwner": "aaaaa2 aaa2",
+      "phoneNumber": "+123456755",
+      "ownerId": 8,
+      "id": 48
+    }
+  ],
+  "register": [
+    {
+      "name": "magda",
+      "surname": "senger",
+      "login": "magdal.sen@gmail.com",
+      "password": "Haslo1234@",
+      "confirm": "Haslo1234@",
+      "id": 1
+    },
+    {
+      "name": "kasia",
+      "surname": "kowalska",
+      "login": "kasia.kasia@yyy.com",
+      "password": "Haslo1234@",
+      "confirm": "Haslo1234@",
+      "id": 2
     }
   ]
 }

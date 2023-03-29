@@ -20,7 +20,7 @@ const yupSchema=yup.object({
 
 export type FormValues = InferType<typeof yupSchema>;
 
-export const CardEdit = () => {
+const CardEdit = () => {
     const [data, setData] = useState<FormValues>();
     const { id } = useParams();
     const queryClient = useQueryClient();
@@ -103,3 +103,5 @@ export const CardEdit = () => {
         </>
     )
 }
+
+export default CardEdit

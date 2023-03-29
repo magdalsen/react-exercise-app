@@ -8,7 +8,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useQuery,useMutation,useQueryClient } from '@tanstack/react-query'
 import { deletePerson,getClientById } from "../../../api/clients";
 
-export const CardDetails = () => {
+const CardDetails = () => {
     const { id } = useParams();
     const queryClient= useQueryClient()
 
@@ -94,3 +94,5 @@ export const CardDetails = () => {
         </div>
     )
 }
+
+export default CardDetails

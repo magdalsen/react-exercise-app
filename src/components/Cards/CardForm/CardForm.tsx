@@ -17,7 +17,7 @@ const yupSchema=yup.object({
 
 export type FormValues = InferType<typeof yupSchema>;
 
-export const Form = () => {
+const Form = () => {
 
     const addClient = async (values:FormValues) => {
         const response = await fetch(`http://localhost:8000/clients`, {
@@ -65,3 +65,5 @@ export const Form = () => {
     </>
   )
 }
+
+export default Form

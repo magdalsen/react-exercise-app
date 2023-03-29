@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useThemeContext } from "..//contexts/context";
+import { Button } from "../contexts/DarkModeButton";
 import style from "./Header.module.css";
 
 export const Header = () => {
@@ -24,6 +26,7 @@ export const Header = () => {
                     <li>
                         <Link to="/invoices">Invoices</Link>
                     </li>
+                    <Button />
                 </ul>
             </nav>
             <hr />

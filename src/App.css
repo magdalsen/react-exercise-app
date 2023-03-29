@@ -16,6 +16,11 @@
   display: block;
 }
 
+.dark-mode {
+  background-color: black;
+  color: #fff;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);

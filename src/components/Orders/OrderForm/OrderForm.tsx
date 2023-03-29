@@ -15,7 +15,7 @@ const yupSchema=yup.object({
 
 export type FormValues = InferType<typeof yupSchema>;
 
-export const FormOrder = () => {
+const FormOrder = () => {
     const addOrder = async (values:FormValues) => {
         const response = await fetch(`http://localhost:8000/orders`, {
           method: "POST",
@@ -77,3 +77,5 @@ export const FormOrder = () => {
     </>
   )
 }
+
+export default FormOrder

@@ -4,13 +4,13 @@ import { FormValues } from "./OrderForm/OrderForm";
 import InputLabel from '@mui/material/InputLabel';
 import { CardProps } from "../Cards/Cards";
 
-export const FormInput = ({
+export function FormInpu<T>({
     formik,
     accessor,
   }: {
     formik: FormikProps<FormValues>;
     accessor: keyof FormValues;
-  }) => {
+  }) {
     return (
         <div>
         <InputLabel id={accessor}>{accessor}</InputLabel>

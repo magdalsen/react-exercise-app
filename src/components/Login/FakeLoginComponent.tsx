@@ -1,10 +1,12 @@
 import { useFormik } from "formik";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useUserContext } from "../../contexts/UserContext";
 import * as yup from "yup"
 import {InferType} from "yup"
-import { FakeRegisterComponent } from "./FakeRegisterComponent";
 import style from "../Cards/CardForm/CardForm.module.css"
+import { FormInput } from "./FormInputLogin";
+
 
 const yupSchema=yup.object({
   login: yup.string().email('Invalid email').required('E-mail required!'),
@@ -19,8 +21,9 @@ const yupSchema=yup.object({
 
 export type FormValues = InferType<typeof yupSchema>;
 
-export const FakeLoginComponent = () => {
-    const [client, setClient] = useState<FormValues[]>([]);
+const FakeLoginComponent = () => {
+    const {login}=useUserContext()
+
 
     const formik = useFormik<FormValues>({
     initialValues: {
@@ -28,8 +31,8 @@ export const FakeLoginComponent = () => {
       password: ""
     },
     onSubmit: (values:FormValues) => {
-        setClient(()=>[{...values}]);
-        alert(`Client ${values.login} ${values.password} logged in!`);
+        login(values.login,values.password)
+        alert(`Client ${values.login} logged in!`);
     },
     validationSchema: yupSchema,
   });
@@ -37,30 +40,8 @@ export const FakeLoginComponent = () => {
   return (
     <>
         <form className={style.form} onSubmit={formik.handleSubmit}>
-            <div>
-                <label htmlFor="login">Login</label>
-                <input
-                    type="text"
-                    id="login"
-                    name="login"
-                    onChange={formik.handleChange}
-                    value={formik.values.login}
-                />
-                {formik.touched.login && formik.errors.login ? (
-                <p style={{ color: "red" }}>{formik.errors.login}</p>
-                ) : null}
-            </div>
-            <div>
-                <label htmlFor="password">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    onChange={formik.handleChange}
-                    value={formik.values.password}
-                />
-                <p style={{ color: "red" }}>{formik.errors.password}</p>
-            </div>
+            <FormInput formik={formik} accessor='login' />
+            <FormInput formik={formik} accessor='password' />
             <button type="submit">Login</button>
             <Link to="/register">
                   <button type="button">Register</button>
@@ -69,3 +50,5 @@ export const FakeLoginComponent = () => {
     </>
   )
 }
+
+export default FakeLoginComponent

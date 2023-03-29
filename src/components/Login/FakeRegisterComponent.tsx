@@ -1,9 +1,12 @@
 import { useFormik } from "formik";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useThemeContext } from "../../contexts/context";
 import * as yup from "yup"
 import {InferType} from "yup"
 import style from "../Cards/CardForm/CardForm.module.css"
+import { FormInput } from "./FormInputRegister";
+import { useUserContext } from "../../contexts/UserContext";
 
 const yupSchema=yup.object({
   name: yup.string().min(3, 'Min 3 characters!').required("Name required!"),
@@ -24,8 +27,23 @@ const yupSchema=yup.object({
 
 export type FormValues = InferType<typeof yupSchema>;
 
-export const FakeRegisterComponent = () => {
-    const [client, setClient] = useState<FormValues[]>([]);
+const FakeRegisterComponent = () => {
+
+    const {addUser}=useUserContext()
+    const addClient = async (values:FormValues) => {
+      addUser(values)
+        const response = await fetch(`http://localhost:8000/register`, {
+          method: "POST",
+           headers: {"Content-type": "application/json;charset=UTF-8"},
+          body: JSON.stringify(values),
+        });
+        if (!response.ok) {
+          return {};
+        }
+        const data = await response.json();
+        console.log(data);
+        return data;
+    }
 
     const formik = useFormik<FormValues>({
     initialValues: {
@@ -36,8 +54,8 @@ export const FakeRegisterComponent = () => {
       confirm: ""
     },
     onSubmit: (values:FormValues) => {
-        setClient(()=>[{...values}]);
-        alert(`Client ${values.login} ${values.password} logged in!`);
+        addClient(values);
+        alert(`Client ${values.login} logged in!`);
     },
     validationSchema: yupSchema,
   });
@@ -45,63 +63,11 @@ export const FakeRegisterComponent = () => {
   return (
     <>
         <form className={style.form} onSubmit={formik.handleSubmit}>
-            <div>
-                <label htmlFor="name">Name</label>
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    onChange={formik.handleChange}
-                    value={formik.values.name}
-                />
-                <p style={{ color: "red" }}>{formik.errors.name}</p>
-            </div>
-            <div>
-                <label htmlFor="surname">Surname</label>
-                <input
-                    type="text"
-                    id="surname"
-                    name="surname"
-                    onChange={formik.handleChange}
-                    value={formik.values.surname}
-                />
-                <p style={{ color: "red" }}>{formik.errors.surname}</p>
-            </div>
-            <div>
-                <label htmlFor="login">Login</label>
-                <input
-                    type="text"
-                    id="login"
-                    name="login"
-                    onChange={formik.handleChange}
-                    value={formik.values.login}
-                />
-                {formik.touched.login && formik.errors.login ? (
-                <p style={{ color: "red" }}>{formik.errors.login}</p>
-                ) : null}
-            </div>
-            <div>
-                <label htmlFor="password">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    onChange={formik.handleChange}
-                    value={formik.values.password}
-                />
-                <p style={{ color: "red" }}>{formik.errors.password}</p>
-            </div>
-            <div>
-                <label htmlFor="confirm">Confirm password</label>
-                <input
-                    type="password"
-                    id="confirm"
-                    name="confirm"
-                    onChange={formik.handleChange}
-                    value={formik.values.confirm}
-                />
-                <p style={{ color: "red" }}>{formik.errors.confirm}</p>
-            </div>
+            <FormInput formik={formik} accessor='name' />
+            <FormInput formik={formik} accessor='surname' />
+            <FormInput formik={formik} accessor='login' />
+            <FormInput formik={formik} accessor='password' />
+            <FormInput formik={formik} accessor='confirm' />
             <button type="submit">Register</button>
             <Link to="/">
                 <button type="button">Back</button>
@@ -110,3 +76,5 @@ export const FakeRegisterComponent = () => {
     </>
   )
 }
+
+export default FakeRegisterComponent
