@@ -6,6 +6,7 @@ import * as yup from "yup"
 import {InferType} from "yup"
 import style from "../Cards/CardForm/CardForm.module.css"
 import { FormInput } from "./FormInputLogin";
+import { useNotificationContext } from "../../contexts/NotificationContext";
 
 
 const yupSchema=yup.object({
@@ -23,6 +24,7 @@ export type FormValues = InferType<typeof yupSchema>;
 
 const FakeLoginComponent = () => {
     const {login,logOut,isLoggedIn}=useUserContext();
+    const {toggleAlert}=useNotificationContext();
 
     const formik = useFormik<FormValues>({
     initialValues: {
@@ -41,7 +43,7 @@ const FakeLoginComponent = () => {
           {isLoggedIn ? <><p>You are logged in.</p><button type="button" onClick={logOut}>Logout</button></> : <>
             <FormInput formik={formik} accessor='login' />
             <FormInput formik={formik} accessor='password' />
-            <button type="submit">Login</button>
+            <button type="submit" onClick={toggleAlert}>Login</button>
           </>}
           <Link to="/register">
             <button type="button">Register</button>

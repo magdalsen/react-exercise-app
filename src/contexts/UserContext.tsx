@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, createContext, useState } from "react"
 import FakeLoginComponent from "../components/Login/FakeLoginComponent";
 import { getSafeContext } from "./getSafeContext";
+import { useNotificationContext } from "./NotificationContext";
 
 type User = {
       name: string;
@@ -22,6 +23,7 @@ export const UserContext=createContext<UserContextProps|null>(null)
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoggedIn,setIsLogged]=useState<boolean>(false)
   const [users, setUsers] = useState<User[]>([]);
+  const {alertText,setAlertText}=useNotificationContext();
 
   const addUser=(user:User)=>{
     setUsers(prev=>[...prev, user]);
@@ -30,11 +32,17 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const login=(username:string,password:string)=>{
     const currentUser=users.find(user=>user.login===username)
     if(currentUser && currentUser.password===password){
-      setIsLogged(true);
-      alert('Logged in!');
-      return true;
+      
+      if(alertText === 'Exiting') {
+        return false
+      } else {
+        setIsLogged(true);
+        setAlertText('Logged in!');
+        return true;
+      }
+
     }
-    alert('Register first!');
+    setAlertText('Register first!');
     return false;
   }
 
