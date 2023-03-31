@@ -10,7 +10,7 @@ type NotificationProviderType = {
 export const NotificationContext=createContext<NotificationProviderType|null>(null)
 
 export const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
-  const [alertText, setAlertText] = useState('Exiting');
+  const [alertText, setAlertText] = useState('');
 
   const toggleAlert = () => {
     if(confirm('Are you sure?')) {
