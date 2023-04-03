@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction, createContext, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import { getSafeContext } from "./getSafeContext";
+import 'react-toastify/dist/ReactToastify.css';
 
 type NotificationProviderType = {
     alertText: string,
@@ -14,10 +16,28 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
 
   const toggleAlert = () => {
     if(confirm('Are you sure?')) {
-        alert(alertText)
+        toast.success(alertText, {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
       } else {
         setAlertText('Exiting');
-        alert('Exiting');
+        toast.error('Exiting', {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
       }
   }
 
@@ -28,6 +48,7 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
         toggleAlert
       }}>
         {children}
+        <ToastContainer />
       </NotificationContext.Provider>
     );
   };

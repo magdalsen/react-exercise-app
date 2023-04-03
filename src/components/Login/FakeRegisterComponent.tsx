@@ -7,6 +7,7 @@ import {InferType} from "yup"
 import style from "../Cards/CardForm/CardForm.module.css"
 import { FormInput } from "./FormInputRegister";
 import { useUserContext } from "../../contexts/UserContext";
+import { useNotificationContext } from "../../contexts/NotificationContext";
 
 const yupSchema=yup.object({
   name: yup.string().min(3, 'Min 3 characters!').required("Name required!"),
@@ -28,7 +29,8 @@ const yupSchema=yup.object({
 export type FormValues = InferType<typeof yupSchema>;
 
 const FakeRegisterComponent = () => {
-
+  const {alertText,setAlertText,toggleAlert}=useNotificationContext();
+  
     const {addUser}=useUserContext()
     const addClient = async (values:FormValues) => {
       addUser(values)
@@ -54,8 +56,13 @@ const FakeRegisterComponent = () => {
       confirm: ""
     },
     onSubmit: (values:FormValues) => {
-        addClient(values);
-        alert(`Client ${values.login} registered!`);
+        if(alertText === 'Exiting') {
+          setAlertText(''); //reset 'Exiting'
+          return
+        } else {
+          addClient(values);
+          setAlertText(`Client ${values.login} registered!`);
+        }
     },
     validationSchema: yupSchema,
   });
@@ -68,7 +75,7 @@ const FakeRegisterComponent = () => {
             <FormInput formik={formik} accessor='login' />
             <FormInput formik={formik} accessor='password' />
             <FormInput formik={formik} accessor='confirm' />
-            <button type="submit">Register</button>
+            <button type="submit" onClick={toggleAlert}>Register</button>
             <Link to="/">
                 <button type="button">Back</button>
             </Link>
