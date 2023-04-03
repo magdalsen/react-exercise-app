@@ -27,8 +27,8 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
             theme: "colored",
         });
       } else {
-        setAlertText('Exiting');
-        toast.error('Exiting', {
+        setAlertText('');
+        toast.error('Exit', {
             position: "top-center",
             autoClose: 1000,
             hideProgressBar: true,

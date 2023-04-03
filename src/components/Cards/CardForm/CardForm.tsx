@@ -4,6 +4,7 @@ import * as yup from "yup"
 import {InferType} from "yup"
 import style from "./CardForm.module.css"
 import LoginWrapper from "../../../components/LoginWrapper";
+import { useNotificationContext } from "../../../contexts/NotificationContext";
 
 const yupSchema=yup.object({
   imgSrc: yup.string().required("Obrazek musi być"),
@@ -19,7 +20,7 @@ const yupSchema=yup.object({
 export type FormValues = InferType<typeof yupSchema>;
 
 const Form = () => {
-
+  const {alertText,setAlertText,toggleAlert}=useNotificationContext();
     const addClient = async (values:FormValues) => {
         const response = await fetch(`http://localhost:8000/clients`, {
           method: "POST",
@@ -45,8 +46,10 @@ const Form = () => {
       phoneNumber: ""
     },
     onSubmit: (values:FormValues) => {
+      if (alertText !== '') {
         addClient(values);
-        alert(`Client ${values.name} ${values.surname} added!`);
+        setAlertText(`Client ${values.name} ${values.surname} added!`);
+      }
     },
     validationSchema: yupSchema,
   });
@@ -62,7 +65,7 @@ const Form = () => {
             <FormInput formik={formik} accessor='town' />
             <FormInput formik={formik} accessor='subRegion' />
             <FormInput formik={formik} accessor='phoneNumber' />
-            <button type="submit">Zapisz</button>
+            <button type="submit" onClick={toggleAlert}>Zapisz</button>
         </form>
       </LoginWrapper>
     </>

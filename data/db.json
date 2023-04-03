@@ -76,6 +76,17 @@
       "subRegion": "aaa3",
       "phoneNumber": "+333333333",
       "id": 13
+    },
+    {
+      "imgSrc": "https://images.unsplash.com/photo-1661869535393-872dea2d9f8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
+      "name": "alicja3",
+      "surname": "kowalska3",
+      "street": "Kujawska",
+      "postCode": "45-345",
+      "town": "Kolin",
+      "subRegion": "jakis",
+      "phoneNumber": "+333333333",
+      "id": 14
     }
   ],
   "orders": [
@@ -158,6 +169,14 @@
       "phoneNumber": "+123456755",
       "ownerId": 8,
       "id": 48
+    },
+    {
+      "title": "oppo",
+      "amount": "67",
+      "orderOwner": "alicja3 kowalska3",
+      "phoneNumber": "+123456755",
+      "ownerId": 14,
+      "id": 49
     }
   ],
   "register": [
@@ -648,6 +667,70 @@
       "password": "Haslo1234@",
       "confirm": "Haslo1234@",
       "id": 61
+    },
+    {
+      "name": "magda",
+      "surname": "sen",
+      "login": "magdal.sen@gmail.com",
+      "password": "Haslo1234@",
+      "confirm": "Haslo1234@",
+      "id": 62
+    },
+    {
+      "name": "magda",
+      "surname": "sen",
+      "login": "magdal.sen@gmail.com",
+      "password": "Haslo1234@",
+      "confirm": "Haslo1234@",
+      "id": 63
+    },
+    {
+      "name": "magda",
+      "surname": "mmmmmmmmmmmm",
+      "login": "magdal.sen@gmail.com",
+      "password": "Haslo1234@",
+      "confirm": "Haslo1234@",
+      "id": 64
+    },
+    {
+      "name": "magda",
+      "surname": "mmmmmmmmmmmm",
+      "login": "magdal.sen@gmail.com",
+      "password": "Haslo1234@",
+      "confirm": "Haslo1234@",
+      "id": 65
+    },
+    {
+      "name": "magda",
+      "surname": "mmmmmmmmmmmm",
+      "login": "magdal.sen@gmail.com",
+      "password": "Haslo1234@",
+      "confirm": "Haslo1234@",
+      "id": 66
+    },
+    {
+      "name": "magda",
+      "surname": "mmmmmmmmmmmm",
+      "login": "magdal.sen@gmail.com",
+      "password": "Haslo1234@",
+      "confirm": "Haslo1234@",
+      "id": 67
+    },
+    {
+      "name": "magda",
+      "surname": "mmmmmmmmmmmm",
+      "login": "magdal.sen@gmail.com",
+      "password": "Haslo1234@",
+      "confirm": "Haslo1234@",
+      "id": 68
+    },
+    {
+      "name": "magda",
+      "surname": "mmmmmmmmmmmm",
+      "login": "magdal.sen@gmail.com",
+      "password": "Haslo1234@",
+      "confirm": "Haslo1234@",
+      "id": 69
     }
   ]
 }

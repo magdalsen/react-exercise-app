@@ -6,6 +6,7 @@ import {InferType} from "yup"
 import style from "../CardForm/CardForm.module.css"
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { FormInput } from "../FormInput";
+import { useNotificationContext } from "../../../contexts/NotificationContext";
 
 const yupSchema=yup.object({
     imgSrc: yup.string().required("Obrazek musi być"),
@@ -21,6 +22,7 @@ const yupSchema=yup.object({
 export type FormValues = InferType<typeof yupSchema>;
 
 const CardEdit = () => {
+    const {alertText,setAlertText,toggleAlert}=useNotificationContext();
     const [data, setData] = useState<FormValues>();
     const { id } = useParams();
     const queryClient = useQueryClient();
@@ -72,12 +74,19 @@ const CardEdit = () => {
           })
       }, []);
 
+    const twoFn = () => {
+      handleUpdatedData();
+      toggleAlert();
+    }
+
     const formik = useFormik<FormValues>({
     initialValues,
     enableReinitialize: true,
     onSubmit: (values:FormValues) => {
-        updateClient(values);
-        alert(`Client ${values.name} ${values.surname} updated!`);
+        if (alertText !== '') {
+          updateClient(values);
+          setAlertText(`Client ${values.name} ${values.surname} updated!`);
+        }
         // alert(`Updated values: ${JSON.stringify(values, null, 2)}`);
     },
     validationSchema: yupSchema,
@@ -95,7 +104,7 @@ const CardEdit = () => {
                 <FormInput formik={formik} accessor='town' />
                 <FormInput formik={formik} accessor='subRegion' />
                 <FormInput formik={formik} accessor='phoneNumber' />
-                <button type="submit" onClick={handleUpdatedData}>Zapisz zmiany</button>
+                <button type="submit" onClick={twoFn}>Zapisz zmiany</button>
                 <Link to={`/clients/${id}`}>
                     <button type="button">Wróć</button>
                 </Link>

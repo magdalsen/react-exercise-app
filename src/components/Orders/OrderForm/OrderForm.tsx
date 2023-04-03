@@ -6,6 +6,7 @@ import { CardProps } from "../../Cards/Cards";
 import style from "../../Cards/CardForm/CardForm.module.css";
 import { FormInput, FormSelect } from "../FormInput";
 import LoginWrapper from "../../../components/LoginWrapper";
+import { useNotificationContext } from "../../../contexts/NotificationContext";
 
 const yupSchema=yup.object({
   title: yup.string().required("Uzupełnij tytuł!"),
@@ -17,6 +18,7 @@ const yupSchema=yup.object({
 export type FormValues = InferType<typeof yupSchema>;
 
 const FormOrder = () => {
+  const {alertText,setAlertText,toggleAlert}=useNotificationContext();
     const addOrder = async (values:FormValues) => {
         const response = await fetch(`http://localhost:8000/orders`, {
           method: "POST",
@@ -46,15 +48,17 @@ const FormOrder = () => {
       phoneNumber: ""
     },
     onSubmit: (values:FormValues) => {
-        const ownerIdFilter = data && data.filter((el)=>{
+        if (alertText !== '') {
+          const ownerIdFilter = data && data.filter((el)=>{
             if (`${el.name} ${el.surname}` === values.orderOwner) {
                 return el.id;
             }
-        });
-        const ownerId = ownerIdFilter && ownerIdFilter[0].id;
-        const id = {ownerId};
-        addOrder({...values, ...id});
-        alert(`Order ${values.title} added!`);
+          });
+          const ownerId = ownerIdFilter && ownerIdFilter[0].id;
+          const id = {ownerId};
+          addOrder({...values, ...id});
+          setAlertText(`Order ${values.title} added!`);
+        }
     },
     validationSchema: yupSchema,
   });
@@ -74,7 +78,7 @@ const FormOrder = () => {
             <FormInput formik={formik} accessor='amount' />
             <FormSelect formik={formik} accessor='orderOwner' data={data} />
             <FormInput formik={formik} accessor='phoneNumber' />
-            <button type="submit">Save</button>
+            <button type="submit" onClick={toggleAlert}>Save</button>
         </form>
       </LoginWrapper>
     </>

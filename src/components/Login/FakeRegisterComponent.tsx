@@ -56,13 +56,10 @@ const FakeRegisterComponent = () => {
       confirm: ""
     },
     onSubmit: (values:FormValues) => {
-        if(alertText === 'Exiting') {
-          setAlertText(''); //reset 'Exiting'
-          return
-        } else {
-          addClient(values);
-          setAlertText(`Client ${values.login} registered!`);
-        }
+      if (alertText !== '') {
+        addClient(values);
+        setAlertText(`Client ${values.login} registered!`);
+      }
     },
     validationSchema: yupSchema,
   });
