@@ -26,13 +26,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const {alertText,setAlertText}=useNotificationContext();
 
   const addUser=(user:User)=>{
-    setUsers(prev=>[...prev, user]);
+    setUsers(prev=>{return [...prev, user]});
   }
 
   const login=(username:string,password:string)=>{
-    const currentUser=users.find(user=>user.login===username)
+    const currentUser=users.find(user=>{return user.login===username})
     if(currentUser && currentUser.password===password){
-      if(alertText === 'Exiting') {
+      if(alertText === '') {
         setIsLogged(false);
         setAlertText(''); //reset 'Exiting'
         return false

@@ -9,6 +9,16 @@ type NotificationProviderType = {
     toggleAlert: ()=>void
 }
 
+const toastConfig = {
+    position: toast.POSITION.TOP_CENTER,
+    autoClose: 1000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined
+}
+
 export const NotificationContext=createContext<NotificationProviderType|null>(null)
 
 export const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
@@ -16,28 +26,10 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
 
   const toggleAlert = () => {
     if(confirm('Are you sure?')) {
-        toast.success(alertText, {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-        });
+        toast.success(alertText, {...toastConfig, theme: "colored"});
       } else {
         setAlertText('');
-        toast.error('Exit', {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-        });
+        toast.error('Exit', {...toastConfig, theme: "colored"});
       }
   }
 

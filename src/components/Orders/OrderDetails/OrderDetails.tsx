@@ -48,11 +48,11 @@ const OrderDetails = () => {
             buttons: [
               {
                 label: 'Yes',
-                onClick: () => mutation2.mutate(id)
+                onClick: () => {return mutation2.mutate(id)}
               },
               {
                 label: 'No',
-                onClick: () => alert('Order not deleted.')
+                onClick: () => {return alert('Order not deleted.')}
               }
             ]
           });
@@ -79,7 +79,7 @@ const OrderDetails = () => {
                 <Link to={`/clients/${data[0].ownerId}`}>
                     <button type="button">Show Client</button>
                 </Link>
-                <button type="button" onClick={()=>handleDelete(id)}>Delete</button>
+                <button type="button" onClick={()=>{return handleDelete(id)}}>Delete</button>
                 <Link to="/orders">
                     <button type="button">Back</button>
                 </Link>

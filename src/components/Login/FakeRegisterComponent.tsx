@@ -13,6 +13,9 @@ const yupSchema=yup.object({
   name: yup.string().min(3, 'Min 3 characters!').required("Name required!"),
   surname: yup.string().min(2, 'Min 2 characters!').required("Surname required!"),
   login: yup.string().email('Invalid email').required('E-mail (login) required!'),
+  // file: yup.object({
+  //   file: yup.mixed().required('Avatar required!')
+  // }),
   password: yup
     .string()
     .min(8, 'Password must be 8 characters long')
@@ -43,7 +46,7 @@ const FakeRegisterComponent = () => {
           return {};
         }
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         return data;
     }
 
@@ -72,6 +75,7 @@ const FakeRegisterComponent = () => {
             <FormInput formik={formik} accessor='login' />
             <FormInput formik={formik} accessor='password' />
             <FormInput formik={formik} accessor='confirm' />
+            {/* <FormImage formik={formik} accessor='file' /> */}
             <button type="submit" onClick={toggleAlert}>Register</button>
             <Link to="/">
                 <button type="button">Back</button>

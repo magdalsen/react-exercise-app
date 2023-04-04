@@ -44,7 +44,7 @@ const CardEdit = () => {
             body: JSON.stringify(values)
         };
         fetch(`http://localhost:8000/clients/${id}`, requestOptions)
-            .then(response => response.json())
+            .then(response => {return response.json()})
             .then(data => {
                 setData(data);
                 return data;

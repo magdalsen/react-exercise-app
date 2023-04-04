@@ -23,7 +23,7 @@ const yupSchema=yup.object({
 export type FormValues = InferType<typeof yupSchema>;
 
 const FakeLoginComponent = () => {
-    const {login,logOut,isLoggedIn}=useUserContext();
+    const {users, login,logOut,isLoggedIn}=useUserContext();
     const {toggleAlert}=useNotificationContext();
 
     const formik = useFormik<FormValues>({
@@ -36,11 +36,15 @@ const FakeLoginComponent = () => {
     },
     validationSchema: yupSchema,
   });
+// console.log(users);
 
   return (
     <>
         <form className={style.form} onSubmit={formik.handleSubmit}>
-          {isLoggedIn ? <><p>You are logged in.</p><button type="button" onClick={logOut}>Logout</button></> : <>
+          {isLoggedIn ? <>
+                          <p>You are logged in {users[0].login}</p>
+                          <button type="button" onClick={logOut}>Logout</button>
+                        </> : <>
             <FormInput formik={formik} accessor='login' />
             <FormInput formik={formik} accessor='password' />
             <button type="submit" onClick={toggleAlert}>Login</button>

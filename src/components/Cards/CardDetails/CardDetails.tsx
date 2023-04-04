@@ -42,11 +42,11 @@ const CardDetails = () => {
             buttons: [
               {
                 label: 'Yes',
-                onClick: () => mutation.mutate(id)
+                onClick: () => {return mutation.mutate(id)}
               },
               {
                 label: 'No',
-                onClick: () => alert('Client not deleted.')
+                onClick: () => {return alert('Client not deleted.')}
               }
             ]
           });
@@ -86,7 +86,7 @@ const CardDetails = () => {
                 <Link to={`/clients/${id}/edit`}>
                     <button type="button">Edit</button>
                 </Link>
-                <button type="button" onClick={()=>handleDelete(id)}>Delete</button>
+                <button type="button" onClick={()=>{return handleDelete(id)}}>Delete</button>
                 <Link to="/clients">
                     <button type="button">Back</button>
                 </Link>
