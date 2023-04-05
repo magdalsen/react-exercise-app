@@ -1,6 +1,8 @@
-import { Dispatch, SetStateAction, createContext, useState } from "react";
+import { createContext, Dispatch, SetStateAction, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
+
 import { getSafeContext } from "./getSafeContext";
+
 import 'react-toastify/dist/ReactToastify.css';
 
 type NotificationProviderType = {

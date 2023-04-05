@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
   QueryCache,
@@ -12,8 +12,8 @@ import { Header } from './components/Header';
 import { NotificationProvider } from './contexts/NotificationContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { UserProvider } from './contexts/UserContext';
-import { decremented, incremented } from './redux/counter';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
+import { decrementByAmount, decremented, incrementByAmount, incremented } from './redux/moneySlice';
 
 import './App.css'
 const FakeLoginComponent = lazy(() => {return import("./components/Login/FakeLoginComponent")});
@@ -38,7 +38,8 @@ const queryClient=new QueryClient({
 
 const App = () => {
   const dispatch = useAppDispatch();
-  const counter = useAppSelector((state) => {return state.counter.value});
+  const moneySlice = useAppSelector((state) => {return state.counter.value});
+  const [input, setInput] = useState<number>(0);
 
   return (
     <>
@@ -52,8 +53,11 @@ const App = () => {
                 )}
                 <div>
                   <button onClick={() => {return dispatch(decremented())}}>-</button>
-                  <span>{counter}</span>
+                  <span>{moneySlice}</span>
                   <button onClick={() => {return dispatch(incremented())}}>+</button>
+                  <button onClick={() => {return dispatch(decrementByAmount(Number(input)))}}>Decrease</button>
+                  <input type="number" value={input} onInput={(e:any) => {return setInput(e.target.value)}} />
+                  <button onClick={() => {return dispatch(incrementByAmount(Number(input)))}}>Increase</button>
                 </div>
                 <BrowserRouter>
                     <Header />

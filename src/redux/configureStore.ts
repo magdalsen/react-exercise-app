@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 
 import authReducer from "./authSlice";
-import counterReducer from "./counter"
+import counterReducer from "./moneySlice"
 
 const reducer = combineReducers({
   counter: counterReducer,
