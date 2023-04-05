@@ -1,5 +1,5 @@
-import { useContext } from "react";
 import type { Context } from "react";
+import { useContext } from "react";
 
 export const getSafeContext = <T>(
     context: Context<T | null>,

@@ -1,12 +1,14 @@
-import { useFormik } from "formik";
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useUserContext } from "../../contexts/UserContext";
-import * as yup from "yup"
-import {InferType} from "yup"
-import style from "../Cards/CardForm/CardForm.module.css"
-import { FormInput } from "./FormInputLogin";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import {InferType} from "yup";
+
 import { useNotificationContext } from "../../contexts/NotificationContext";
+import { useUserContext } from "../../contexts/UserContext";
+
+import { FormInput } from "./FormInputLogin";
+
+import style from "../Cards/CardForm/CardForm.module.css";
 
 
 const yupSchema=yup.object({

@@ -1,17 +1,21 @@
-import './App.css'
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Header } from './components/Header';
 import {
   QueryCache,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { ThemeProvider } from './contexts/ThemeContext';
+
 import ErrorBoundary from './components/ErrorBoundary';
-import { lazy, Suspense } from 'react';
-import { UserProvider } from './contexts/UserContext';
+import { Header } from './components/Header';
 import { NotificationProvider } from './contexts/NotificationContext';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { UserProvider } from './contexts/UserContext';
+import { decremented, incremented } from './redux/counter';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
+
+import './App.css'
 const FakeLoginComponent = lazy(() => {return import("./components/Login/FakeLoginComponent")});
 const FakeRegisterComponent = lazy(() => {return import("./components/Login/FakeRegisterComponent")});
 const Clients = lazy(() => {return import("./components/pages/Clients")});
@@ -33,6 +37,9 @@ const queryClient=new QueryClient({
 })
 
 const App = () => {
+  const dispatch = useAppDispatch();
+  const counter = useAppSelector((state) => {return state.counter.value});
+
   return (
     <>
       <ErrorBoundary>
@@ -43,6 +50,11 @@ const App = () => {
                     {process.env.NODE_ENV === "development" && (
                   <ReactQueryDevtools position="top-right" initialIsOpen={false} />
                 )}
+                <div>
+                  <button onClick={() => {return dispatch(decremented())}}>-</button>
+                  <span>{counter}</span>
+                  <button onClick={() => {return dispatch(incremented())}}>+</button>
+                </div>
                 <BrowserRouter>
                     <Header />
                     <Suspense fallback={<h1>Still Loading…</h1>}>

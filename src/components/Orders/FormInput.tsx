@@ -1,16 +1,18 @@
 import { FormControl, FormHelperText, MenuItem, Select, TextField } from "@mui/material";
-import { FormikProps } from "formik";
-import { FormValues } from "./OrderForm/OrderForm";
 import InputLabel from '@mui/material/InputLabel';
+import { FormikProps } from "formik";
+
 import { CardProps } from "../Cards/Cards";
 
-export function FormInput<T>({
+import { FormValues } from "./OrderForm/OrderForm";
+
+export const FormInput = ({
     formik,
     accessor,
   }: {
     formik: FormikProps<FormValues>;
     accessor: keyof FormValues;
-  }) {
+  }) => {
     return (
         <div>
         <InputLabel id={accessor}>{accessor}</InputLabel>
@@ -30,7 +32,7 @@ export function FormInput<T>({
         />
       </div>
     );
-  };
+  }
 
   export const FormSelect = ({
     formik,
@@ -52,9 +54,10 @@ export function FormInput<T>({
           name={accessor}
           onChange={formik.handleChange}
         >
-              {data && data.map((el)=>( 
+              {data && data.map((el)=>{return ( 
+                // eslint-disable-next-line react/jsx-key
                 <MenuItem value={`${el.name} ${el.surname}`}>{`${el.name} ${el.surname}`}</MenuItem>
-              ))}
+              )})}
         </Select>
         <FormHelperText>Select who make order</FormHelperText>
         </FormControl>
