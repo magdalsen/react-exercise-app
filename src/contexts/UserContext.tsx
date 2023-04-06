@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction, createContext, useState } from "react"
-import FakeLoginComponent from "../components/Login/FakeLoginComponent";
+import { createContext, useState } from "react"
+
 import { getSafeContext } from "./getSafeContext";
 import { useNotificationContext } from "./NotificationContext";
 
@@ -8,6 +8,7 @@ type User = {
       surname: string;
       login: string;
       password: string;
+      image: string;
     }
 
 type UserContextProps={

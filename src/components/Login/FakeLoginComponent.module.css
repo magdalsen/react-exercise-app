@@ -1,0 +1,23 @@
+form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+img {
+    width: 55px;
+    margin: 0 5px 0 0;
+}
+
+.moneyValue {
+    font-size: 23px;
+    margin: 0 0 0 5px;
+}
+
+.avatarBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

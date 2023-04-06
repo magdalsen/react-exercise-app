@@ -14,9 +14,6 @@ const yupSchema=yup.object({
   name: yup.string().min(3, 'Min 3 characters!').required("Name required!"),
   surname: yup.string().min(2, 'Min 2 characters!').required("Surname required!"),
   login: yup.string().email('Invalid email').required('E-mail (login) required!'),
-  // file: yup.object({
-  //   file: yup.mixed().required('Avatar required!')
-  // }),
   password: yup
     .string()
     .min(8, 'Password must be 8 characters long')
@@ -27,7 +24,11 @@ const yupSchema=yup.object({
     .required('Password required!'),
   confirm: yup.string()
     .oneOf([yup.ref('password')], 'Must match "password" field value')
-    .required('Confirm password required!')
+    .required('Confirm password required!'),
+  // file: yup.object({
+  //   file: yup.mixed().required('Avatar required!')
+  // }),
+  image: yup.string().required("Avatar required!"),
 })
 
 export type FormValues = InferType<typeof yupSchema>;
@@ -57,7 +58,8 @@ const FakeRegisterComponent = () => {
       surname: "",
       login: "",
       password: "",
-      confirm: ""
+      confirm: "",
+      image: "https://wallpaper.dog/logob.png",
     },
     onSubmit: (values:FormValues) => {
       addClient(values);
