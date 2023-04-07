@@ -55,7 +55,7 @@ const Orders = () => {
                 {data?.clients.map((el2:any)=>{return (
                   // eslint-disable-next-line react/jsx-key
                   <div className={(Number(`${el2.id}`) === Number(el.ownerId) ? '' : style.dispNone)}>
-                    <Order id={el.id} title={el.title} amount={el.amount} orderOwner={Number(`${el2.id}`) === Number(el.ownerId) ? `${el2.name} ${el2.surname}` : ''} ownerId={el.ownerId} phoneNumber={el.phoneNumber} />
+                    <Order id={el.id} title={el.title} amount={el.amount} orderOwner={Number(`${el2.id}`) === Number(el.ownerId) ? `${el2.name} ${el2.surname}` : ''} ownerId={el.ownerId} phoneNumber={el.phoneNumber} payed={false} />
                     <div>
                       <input type="checkbox" id="orderInvoice" name="orderInvoice" onChange={(e:React.ChangeEvent<HTMLInputElement>) => {e.target.checked ? dispatch(increment({id: el.id, title: el.title})) : dispatch(decrement(el.id))}} />
                       <label htmlFor="orderInvoice">Add to invoice</label>

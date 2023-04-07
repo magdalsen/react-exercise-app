@@ -4,6 +4,7 @@ import { useAppSelector } from '../../redux/hooks';
 import { CounterState } from '../../redux/orderSlice';
 import LoginWrapper from '../LoginWrapper'
 
+import InvoicesForm from './InvoicesForm';
 import InvoicesWrapper from './InvoicesWrapper';
 
 import style from "./Invoices.module.css"
@@ -23,6 +24,7 @@ const Invoices = () => {
                   <div>{i+1}. {el.title}</div>
                 </Link>
               )})}</div>
+              <InvoicesForm />
             </div>
           </InvoicesWrapper>
         </LoginWrapper>

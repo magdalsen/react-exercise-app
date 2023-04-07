@@ -7,7 +7,8 @@ export interface OrderProps {
   amount:number,
   orderOwner:string,
   ownerId:number,
-  phoneNumber:string
+  phoneNumber:string,
+  payed:boolean,
 }
 
 export const Order = ({id, title, amount, orderOwner, phoneNumber}:OrderProps) => {

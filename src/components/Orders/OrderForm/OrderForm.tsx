@@ -2,17 +2,20 @@ import { useQuery } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as yup from "yup"
 import {InferType} from "yup"
-import { CardProps } from "../../Cards/Cards";
-import style from "../../Cards/CardForm/CardForm.module.css";
-import { FormInput, FormSelect } from "../FormInput";
+
 import LoginWrapper from "../../../components/LoginWrapper";
 import { useNotificationContext } from "../../../contexts/NotificationContext";
+import { CardProps } from "../../Cards/Cards";
+import { FormInput, FormSelect } from "../FormInput";
+
+import style from "../../Cards/CardForm/CardForm.module.css";
 
 const yupSchema=yup.object({
   title: yup.string().required("Uzupełnij tytuł!"),
   amount: yup.number().required("Uzupełnij ilość!"),
   orderOwner: yup.string().required("Uzupełnij ulicę!"),
-  phoneNumber: yup.string().matches(/\+[0-9]{9}/)
+  phoneNumber: yup.string().matches(/\+[0-9]{9}/),
+  payed: yup.boolean()
 })
 
 export type FormValues = InferType<typeof yupSchema>;
@@ -45,7 +48,8 @@ const FormOrder = () => {
       title: "",
       amount: 0,
       orderOwner: "",
-      phoneNumber: ""
+      phoneNumber: "",
+      payed: false,
     },
     onSubmit: (values:FormValues) => {
         if (alertText !== '') {
