@@ -1,13 +1,19 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { decrement, increment } from '../../redux/orderSlice'
 import LoginWrapper from '../LoginWrapper'
 import { Order, OrderProps } from '../Orders/Order'
 import { Wrapper } from '../Wrapper'
+
 import style from "./Orders.module.css"
 
 const Orders = () => {
   const queryClient = useQueryClient();
+  const orderSlice = useAppSelector((state) => {return state.invoice});
+  const dispatch = useAppDispatch();
 
       const fetchFn = async () => {
         const response =  await fetch(`http://localhost:8000/orders`)
@@ -44,18 +50,23 @@ const Orders = () => {
     <LoginWrapper>
      <div>
         <Wrapper>
-            {data?.orders.map((el: OrderProps) => (
+            {data?.orders.map((el: OrderProps) => {return (
               <div key={el.id}>
-                {data?.clients.map((el2:any)=>(
+                {data?.clients.map((el2:any)=>{return (
+                  // eslint-disable-next-line react/jsx-key
                   <div className={(Number(`${el2.id}`) === Number(el.ownerId) ? '' : style.dispNone)}>
                     <Order id={el.id} title={el.title} amount={el.amount} orderOwner={Number(`${el2.id}`) === Number(el.ownerId) ? `${el2.name} ${el2.surname}` : ''} ownerId={el.ownerId} phoneNumber={el.phoneNumber} />
+                    <div>
+                      <input type="checkbox" id="orderInvoice" name="orderInvoice" onChange={(e:React.ChangeEvent<HTMLInputElement>) => {e.target.checked ? dispatch(increment({id: el.id, title: el.title})) : dispatch(decrement(el.id))}} />
+                      <label htmlFor="orderInvoice">Add to invoice</label>
                   </div>
-                ))}
+                  </div>
+                )})}
                 <Link to={`/orders/${el.id}`}>
                   <button type="button">Details</button>
                 </Link>
               </div>
-            ))}
+            )})}
         </Wrapper>
     </div>
     </LoginWrapper>

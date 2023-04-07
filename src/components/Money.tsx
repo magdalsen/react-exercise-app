@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { InputLabel, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import {InferType} from "yup";
 import * as yup from "yup";
@@ -37,9 +38,9 @@ const Money = () => {
             <LoginWrapper>
                 <form className={style.form} onSubmit={formik.handleSubmit}>
                     <div>
+                        <InputLabel htmlFor="money">Money:</InputLabel>
                         <div className={style.moneyValue}>{moneySlice} $</div>
-                        <label htmlFor="money">Money $</label>
-                        <input
+                        <TextField
                             type="number"
                             onChange={formik.handleChange}
 

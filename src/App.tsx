@@ -9,6 +9,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import ErrorBoundary from './components/ErrorBoundary';
 import { Header } from './components/Header';
+import Invoices from './components/Invoices/Invoices';
 import Money from './components/Money';
 import { NotificationProvider } from './contexts/NotificationContext';
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -49,7 +50,7 @@ const App = () => {
                     {process.env.NODE_ENV === "development" && (
                   <ReactQueryDevtools position="top-right" initialIsOpen={false} />
                 )}
-                <div>{moneySlice}</div>
+                <div>Money: {moneySlice} $</div>
                 <BrowserRouter>
                     <Header />
                     <Suspense fallback={<h1>Still Loading…</h1>}>
@@ -64,7 +65,7 @@ const App = () => {
                           <Route path="/orders/add" element={<FormOrder />} />
                           <Route index path="/orders/:id" element={<OrderDetails />} />
                           <Route path="/money" element={<Money />} />
-                          <Route path="/invoices" element={<div>/invoices</div>} />
+                          <Route path="/invoices" element={<Invoices />} />
                           <Route element={<div>404</div>} path="*"/>
                       </Routes>
                     </Suspense>

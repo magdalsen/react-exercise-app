@@ -3,10 +3,12 @@ import { combineReducers } from "redux";
 
 import authReducer from "./authSlice";
 import counterReducer from "./moneySlice"
+import orderSlice from "./orderSlice"
 
 const reducer = combineReducers({
   counter: counterReducer,
   auth: authReducer,
+  invoice: orderSlice,
 });
 export const store = configureStore({ reducer });
 // dodajemy dodatkowe hooki i typy do zabezpieczenia reduxa

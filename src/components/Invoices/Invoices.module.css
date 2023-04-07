@@ -1,0 +1,24 @@
+.invoiceBox {
+    color: green;
+    border: 2px solid;
+    width: 400px;
+    height: 600px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+.invoiceTitle {
+    margin: 0 0 20px 0;
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.invoiceData {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
