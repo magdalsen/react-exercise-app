@@ -20,7 +20,7 @@ const yupSchema=yup.object({
   export type FormValues = InferType<typeof yupSchema>;
 
 const Money = () => {
-    const moneySlice = useAppSelector((state) => {return state.counter.value});
+    const moneySlice = useAppSelector((state) => state.counter.value);
     const dispatch = useAppDispatch();
 
     const formik = useFormik<FormValues>({
@@ -55,12 +55,12 @@ const Money = () => {
                     <div>
                         <button 
                             type="submit" 
-                            onClick={() => {return dispatch(decrementByAmount(formik.values.money))}} >
+                            onClick={() => dispatch(decrementByAmount(formik.values.money))} >
                                 Decrease
                         </button>
                         <button 
                             type="submit" 
-                            onClick={() => {return dispatch(incrementByAmount(formik.values.money))}} >
+                            onClick={() => dispatch(incrementByAmount(formik.values.money))} >
                                 Increase
                         </button>
                     </div>

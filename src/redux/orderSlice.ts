@@ -2,33 +2,30 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
 
+export interface InvoiceElem {title:string,id:number}
+
 export interface CounterState {
-    orders: []
-  }
-  
-  const initialState = {
-    orders: []
+    orders: InvoiceElem[]
   }
 
 export const orderSlice = createSlice({
     name: "orderSlice",
-    initialState,
+    initialState: {
+      orders: [] as InvoiceElem[]
+    },
     reducers: {
-      increment: (state,action:PayloadAction<CounterState>)=>{
-        return {
-            ...state,
+      addInvoiceElement: (state,action:PayloadAction<InvoiceElem>)=>({
             orders: [...state.orders, action.payload],
-          }
-      },
-      decrement: (state,action:PayloadAction<number>)=>{
+          }),
+      removeInvoiceElementById: (state,action:PayloadAction<number>)=>{
         const id = action.payload
         return {
             ...state,
-            orders: state.orders.filter((order: {id:number})=> {return order.id !== id})
+            orders: state.orders.filter((order: {id:number})=> order.id !== id)
         }
-    }
+      }
     },
   });
   
-  export const { increment,decrement } = orderSlice.actions;
+  export const { addInvoiceElement,removeInvoiceElementById } = orderSlice.actions;
   export default orderSlice.reducer;

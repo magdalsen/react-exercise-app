@@ -33,5 +33,5 @@ export const counterSlice = createSlice({
 
 export const { incremented, decremented,incrementByAmount, decrementByAmount } = counterSlice.actions;
 //nasz wlasny selector do wyciągania części przechowywanego stanu
-export const selectCount=(state:RootState)=>{return state.counter.value}
+export const selectCount=(state:RootState)=>state.counter.value
 export default counterSlice.reducer;
