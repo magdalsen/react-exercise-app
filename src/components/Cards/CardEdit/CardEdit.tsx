@@ -6,6 +6,7 @@ import * as yup from "yup"
 import {InferType} from "yup"
 
 import { useNotificationContext } from "../../../contexts/NotificationContext";
+import { supabase } from "../../../supabaseClient";
 import { FormInput } from "../FormInput";
 
 import style from "../CardForm/CardForm.module.css"
@@ -40,20 +41,26 @@ const CardEdit = () => {
       });
 
     const updateClient = async (values:FormValues) => {
-        const requestOptions = {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(values)
-        };
-        fetch(`http://localhost:8000/clients/${id}`, requestOptions)
-            .then(response => {return response.json()})
-            .then(data => {
-                setData(data);
-                return data;
-            })
+      const { data, error } = await supabase
+        .from('clients')
+        .update({ ...values })
+        .eq('id', id)
+        return data;
+
+        // const requestOptions = {
+        //     method: 'PUT',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify(values)
+        // };
+        // fetch(`http://localhost:8000/clients/${id}`, requestOptions)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         setData(data);
+        //         return data;
+        //     })
     }
 
-    const mutation = useMutation(async (values:any)=>{return await updateClient(values)}, {
+    const mutation = useMutation(async (values:any)=>await updateClient(values), {
       onSuccess: () => {
         queryClient.invalidateQueries(['clients']);
       },
@@ -66,14 +73,23 @@ const CardEdit = () => {
         mutation.mutate(data);
     }
 
+    const goFetch = async () => {
+      const { data, error } = await supabase
+      .from('clients')
+      .select('*')
+      .eq('id', id)
+      setInitialValues(data[0]);
+    }
+
     useEffect(() => {
-        fetch(`http://localhost:8000/clients/${id}`)
-          .then(res => {
-            return res.json();
-          })
-          .then((data) => {
-            setInitialValues(data);
-          })
+        goFetch();
+      // return data && data[0];
+
+        // fetch(`http://localhost:8000/clients/${id}`)
+        //   .then(res => res.json())
+        //   .then((data) => {
+        //     setInitialValues(data);
+        //   })
       }, []);
 
     const twoFn = () => {

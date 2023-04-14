@@ -11,8 +11,7 @@ export interface OrderProps {
   payed:boolean,
 }
 
-export const Order = ({id, title, amount, orderOwner, phoneNumber}:OrderProps) => {
-    return (
+export const Order = ({id, title, amount, orderOwner, phoneNumber}:OrderProps) => (
         <>
           <div className={style.card}>
             <div>
@@ -25,4 +24,3 @@ export const Order = ({id, title, amount, orderOwner, phoneNumber}:OrderProps) =
           </div>
         </>
     )
-}

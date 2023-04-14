@@ -17,15 +17,15 @@ import { UserProvider } from './contexts/UserContext';
 import { useAppSelector } from './redux/hooks';
 
 import './App.css'
-const FakeLoginComponent = lazy(() => {return import("./components/Login/FakeLoginComponent")});
-const FakeRegisterComponent = lazy(() => {return import("./components/Login/FakeRegisterComponent")});
-const Clients = lazy(() => {return import("./components/pages/Clients")});
-const Form = lazy(() => {return import("./components/Cards/CardForm/CardForm")});
-const CardDetails = lazy(() => {return import("./components/Cards/CardDetails/CardDetails")});
-const CardEdit = lazy(() => {return import("./components/Cards/CardEdit/CardEdit")});
-const Orders = lazy(() => {return import("./components/pages/Orders")});
-const FormOrder = lazy(() => {return import("./components/Orders/OrderForm/OrderForm")});
-const OrderDetails = lazy(() => {return import("./components/Orders/OrderDetails/OrderDetails")});
+const FakeLoginComponent = lazy(() => import("./components/Login/FakeLoginComponent"));
+const FakeRegisterComponent = lazy(() => import("./components/Login/FakeRegisterComponent"));
+const Clients = lazy(() => import("./components/pages/Clients"));
+const Form = lazy(() => import("./components/Cards/CardForm/CardForm"));
+const CardDetails = lazy(() => import("./components/Cards/CardDetails/CardDetails"));
+const CardEdit = lazy(() => import("./components/Cards/CardEdit/CardEdit"));
+const Orders = lazy(() => import("./components/pages/Orders"));
+const FormOrder = lazy(() => import("./components/Orders/OrderForm/OrderForm"));
+const OrderDetails = lazy(() => import("./components/Orders/OrderDetails/OrderDetails"));
 
 const queryClient=new QueryClient({
   queryCache: new QueryCache(),
@@ -38,7 +38,7 @@ const queryClient=new QueryClient({
 })
 
 const App = () => {
-  const moneySlice = useAppSelector((state) => {return state.counter.value});
+  const moneySlice = useAppSelector((state) => state.counter.value);
 
   return (
     <>

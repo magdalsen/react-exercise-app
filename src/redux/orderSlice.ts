@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
@@ -5,6 +6,8 @@ import { createSlice } from '@reduxjs/toolkit'
 export interface InvoiceElem {title:string,id:number}
 
 export interface CounterState {
+    id: any;
+    title: ReactNode;
     orders: InvoiceElem[]
   }
 

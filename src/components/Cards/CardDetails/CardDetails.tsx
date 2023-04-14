@@ -1,18 +1,19 @@
-import { Link} from "react-router-dom";
-import style from "./CardDetails.module.css";
-import { useParams } from "react-router-dom";
-import { CardProps } from "../Cards";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
-import { useQuery,useMutation,useQueryClient } from '@tanstack/react-query'
+import { Link} from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useMutation,useQuery,useQueryClient } from '@tanstack/react-query'
+
 import { deletePerson,getClientById } from "../../../api/clients";
+
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import style from "./CardDetails.module.css";
 
 const CardDetails = () => {
     const { id } = useParams();
     const queryClient= useQueryClient()
 
-    const mutation = useMutation(async (id:string)=>{return await deletePerson(id)}, {
+    const mutation = useMutation(async (id:string)=>await deletePerson(id), {
       onSuccess: () => {
         queryClient.invalidateQueries();
       },
@@ -25,7 +26,7 @@ const CardDetails = () => {
       mutation2.mutate(data)
     }, [])
 
-    const mutation2 = useMutation(async (id:string)=>{return await getClientById(id)}, {
+    const mutation2 = useMutation(async (id:string)=>await getClientById(id), {
       onSuccess: () => {
         queryClient.invalidateQueries();
       },
@@ -42,11 +43,11 @@ const CardDetails = () => {
             buttons: [
               {
                 label: 'Yes',
-                onClick: () => {return mutation.mutate(id)}
+                onClick: () => mutation.mutate(id)
               },
               {
                 label: 'No',
-                onClick: () => {return alert('Client not deleted.')}
+                onClick: () => alert('Client not deleted.')
               }
             ]
           });
@@ -73,20 +74,20 @@ const CardDetails = () => {
             Informacje o wizytówce:
             <div>Id: {id}</div>
             <div>
-                <div className={style.dot}><img src={data.imgSrc} alt="avatar" className={style.avatar} /></div>
-                <div>Imię: {data.name}</div>
-                <div>Nazwisko: {data.surname}</div>
-                <div>Ulica: {data.street}</div>
-                <div>Kod pocztowy: {data.postCode}</div>
-                <div>Miasto: {data.town}</div>
-                <div>Województwo: {data.subRegion}</div>
-                <div>Numer telefonu: {data.phoneNumber}</div>
+                <div className={style.dot}><img src={data?.imgSrc} alt="avatar" className={style.avatar} /></div>
+                <div>Imię: {data?.name}</div>
+                <div>Nazwisko: {data?.surname}</div>
+                <div>Ulica: {data?.street}</div>
+                <div>Kod pocztowy: {data?.postCode}</div>
+                <div>Miasto: {data?.town}</div>
+                <div>Województwo: {data?.subRegion}</div>
+                <div>Numer telefonu: {data?.phoneNumber}</div>
             </div>
             <div>
                 <Link to={`/clients/${id}/edit`}>
                     <button type="button">Edit</button>
                 </Link>
-                <button type="button" onClick={()=>{return handleDelete(id)}}>Delete</button>
+                <button type="button" onClick={()=>handleDelete(id)}>Delete</button>
                 <Link to="/clients">
                     <button type="button">Back</button>
                 </Link>

@@ -5,6 +5,7 @@ import {InferType} from "yup"
 
 import LoginWrapper from "../../../components/LoginWrapper";
 import { useNotificationContext } from "../../../contexts/NotificationContext";
+import { supabase } from "../../../supabaseClient";
 import { CardProps } from "../../Cards/Cards";
 import { FormInput, FormSelect } from "../FormInput";
 
@@ -23,22 +24,31 @@ export type FormValues = InferType<typeof yupSchema>;
 const FormOrder = () => {
   const {alertText,setAlertText,toggleAlert}=useNotificationContext();
     const addOrder = async (values:FormValues) => {
-        const response = await fetch(`http://localhost:8000/orders`, {
-          method: "POST",
-           headers: {"Content-type": "application/json;charset=UTF-8"},
-          body: JSON.stringify(values),
-        });
-        if (!response.ok) {
-          return {};
-        }
-        const data = await response.json();
-        return data;
+      const { data, error } = await supabase
+      .from('orders')
+      .insert([
+        { ...values },
+      ])
+      return data;
+        // const response = await fetch(`http://localhost:8000/orders`, {
+        //   method: "POST",
+        //    headers: {"Content-type": "application/json;charset=UTF-8"},
+        //   body: JSON.stringify(values),
+        // });
+        // if (!response.ok) {
+        //   return {};
+        // }
+        // const data = await response.json();
+        // return data;
     }
 
     const fetchFn = async () => {
-        const response = await fetch('http://localhost:8000/clients');
-        const res = await response.json();
-        const data = await res;
+      const { data, error } = await supabase
+      .from('clients')
+      .select('*')
+        // const response = await fetch('http://localhost:8000/clients');
+        // const res = await response.json();
+        // const data = await res;
         return data;
     }
     const {data, isLoading, error}=useQuery<CardProps[]>(["clients"],fetchFn);

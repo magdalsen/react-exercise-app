@@ -10,7 +10,7 @@ import InvoicesWrapper from './InvoicesWrapper';
 import style from "./Invoices.module.css"
 
 const Invoices = () => {
-  const orderSlice = useAppSelector((state) => {return state.invoice});
+  const orderSlice = useAppSelector((state) => state.invoice);
 
   return (
     <>
@@ -18,12 +18,12 @@ const Invoices = () => {
           <InvoicesWrapper>
             <div className={style.invoiceBox}>
               <div className={style.invoiceTitle}>Invoice</div>
-              <div className={style.invoiceData}>{orderSlice.orders.map((el:CounterState, i)=>{return (
+              <div className={style.invoiceData}>{orderSlice.orders.map((el, i)=>(
                 // eslint-disable-next-line react/jsx-key
                 <Link to={`/orders/${el.id}`}>
                   <div>{i+1}. {el.title}</div>
                 </Link>
-              )})}</div>
+              ))}</div>
               <InvoicesForm />
             </div>
           </InvoicesWrapper>

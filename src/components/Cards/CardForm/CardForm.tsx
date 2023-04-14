@@ -1,10 +1,13 @@
 import { useFormik } from "formik";
-import { FormInput } from "../FormInput";
 import * as yup from "yup"
 import {InferType} from "yup"
-import style from "./CardForm.module.css"
+
+import { supabase } from "../../../../src/supabaseClient";
 import LoginWrapper from "../../../components/LoginWrapper";
 import { useNotificationContext } from "../../../contexts/NotificationContext";
+import { FormInput } from "../FormInput";
+
+import style from "./CardForm.module.css"
 
 const yupSchema=yup.object({
   imgSrc: yup.string().required("Obrazek musi być"),
@@ -22,15 +25,21 @@ export type FormValues = InferType<typeof yupSchema>;
 const Form = () => {
   const {alertText,setAlertText,toggleAlert}=useNotificationContext();
     const addClient = async (values:FormValues) => {
-        const response = await fetch(`http://localhost:8000/clients`, {
-          method: "POST",
-           headers: {"Content-type": "application/json;charset=UTF-8"},
-          body: JSON.stringify(values),
-        });
-        if (!response.ok) {
-          return {};
-        }
-        const data = await response.json();
+
+      const { data, error } = await supabase
+        .from('clients')
+        .insert([
+          { ...values },
+        ])
+        // const response = await fetch(`http://localhost:8000/clients`, {
+        //   method: "POST",
+        //    headers: {"Content-type": "application/json;charset=UTF-8"},
+        //   body: JSON.stringify(values),
+        // });
+        // if (!response.ok) {
+        //   return {};
+        // }
+        // const data = await response.json();
         return data;
     }
 

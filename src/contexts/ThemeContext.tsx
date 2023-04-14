@@ -1,5 +1,5 @@
-import { Theme } from "@emotion/react"
-import { Dispatch, SetStateAction, createContext, useState,useEffect } from "react"
+import { createContext, Dispatch, SetStateAction, useEffect,useState } from "react"
+
 import { getSafeContext } from "./getSafeContext"
 
 type ThemeContextType={
@@ -14,7 +14,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
   const toggleTheme = () => {
-      setIsDarkTheme(prev=>{return !prev});
+      setIsDarkTheme(prev=>!prev);
     }
 
     useEffect(() => {

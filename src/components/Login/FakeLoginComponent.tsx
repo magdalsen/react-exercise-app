@@ -12,7 +12,7 @@ import { FormInput } from "./FormInputLogin";
 import style from "./FakeLoginComponent.module.css";
 
 const yupSchema=yup.object({
-  login: yup.string().email('Invalid email').required('E-mail required!'),
+  email: yup.string().email('Invalid email').required('E-mail required!'),
   password: yup.string()
     .min(8, 'Password must be 8 characters long')
     .matches(/[0-9]/, 'Password requires a number')
@@ -25,18 +25,20 @@ const yupSchema=yup.object({
 export type FormValues = InferType<typeof yupSchema>;
 
 const FakeLoginComponent = () => {
-    const {users, login,logOut,isLoggedIn}=useUserContext();
+    const {image,email,users, login,logOut,isLoggedIn}=useUserContext();
     const {toggleAlert}=useNotificationContext();
-    const moneySlice = useAppSelector((state) => {return state.counter.value});
-
+    const moneySlice = useAppSelector((state) => state.counter.value);
 
     const formik = useFormik<FormValues>({
     initialValues: {
-      login: "",
+      email: "",
       password: ""
     },
     onSubmit: (values:FormValues) => {
-      if (!isLoggedIn) login(values.login,values.password);
+      if (!isLoggedIn) {
+        login(values.email,values.password);
+      }
+      // if (!isLoggedIn) login(values.email,values.password);
     },
     validationSchema: yupSchema,
   });
@@ -45,16 +47,16 @@ const FakeLoginComponent = () => {
     <>
         <form className={style.form} onSubmit={formik.handleSubmit}>
           {isLoggedIn ? <>
-                          <div><p>You are logged in {users[0].login}</p></div>
+                          <div><p>You are logged in {email}</p></div>
                           <div className={style.avatarBox}>
-                            <img src={users[0].image} alt="avatar" />
+                            <img src={image} alt="avatar" />
                             <Link to="/money" className={style.moneyValue}>
                               <span>{moneySlice} $</span>
                             </Link>
                           </div>
                           <div><button type="button" onClick={logOut}>Logout</button></div>
                         </> : <>
-            <FormInput formik={formik} accessor='login' />
+            <FormInput formik={formik} accessor='email' />
             <FormInput formik={formik} accessor='password' />
             <button type="submit" onClick={toggleAlert}>Login</button>
           </>}

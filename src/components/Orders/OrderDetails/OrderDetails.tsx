@@ -1,21 +1,33 @@
+import { useEffect } from "react";
+import { confirmAlert } from "react-confirm-alert";
 import { Link} from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { confirmAlert } from "react-confirm-alert";
+
 import { deleteOrder } from "../../../api/clients";
+import { supabase } from "../../../supabaseClient";
+
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const OrderDetails = () => {
     const { id } = useParams();
     const queryClient = useQueryClient();
 
     const fetchFn = async () => {
-      const response =  await fetch(`http://localhost:8000/orders/${id}`)
-      const order =  await response.json();
-      const response2 = await fetch(`http://localhost:8000/clients/${order.ownerId}`);
-      const client = await response2.json();
-      return [order,client];
+      const { data:order } = await supabase
+      .from('orders')
+      .select('*')
+      .eq('id', id)
+      // return data && data[0];
+      // const response =  await fetch(`http://localhost:8000/orders/${id}`)
+      // const order =  await response.json();
+      const { data:client, error } = await supabase
+      .from('clients')
+      .select('*')
+      .eq('id', order[0].ownerId)
+      // const response2 = await fetch(`http://localhost:8000/clients/${order.ownerId}`);
+      // const client = await response2.json();
+      return [order[0],client[0]];
     }
     const {data,isLoading,error}=useQuery(['orders',id],fetchFn);
 
@@ -23,7 +35,7 @@ const OrderDetails = () => {
       mutation.mutate(data && data[0] || [])
     }, [data])
 
-       const mutation = useMutation(async ()=>{return await fetchFn()}, {
+       const mutation = useMutation(async ()=>await fetchFn(), {
         onSuccess: () => {
           queryClient.invalidateQueries(['orders',id]);
         },
@@ -32,7 +44,7 @@ const OrderDetails = () => {
         }
       });
 
-      const mutation2 = useMutation(async (id:string)=>{return await deleteOrder(id)}, {
+      const mutation2 = useMutation(async (id:string)=>await deleteOrder(id), {
         onSuccess: () => {
           queryClient.invalidateQueries();
         },
@@ -48,11 +60,11 @@ const OrderDetails = () => {
             buttons: [
               {
                 label: 'Yes',
-                onClick: () => {return mutation2.mutate(id)}
+                onClick: () => mutation2.mutate(id)
               },
               {
                 label: 'No',
-                onClick: () => {return alert('Order not deleted.')}
+                onClick: () => alert('Order not deleted.')
               }
             ]
           });
@@ -79,7 +91,7 @@ const OrderDetails = () => {
                 <Link to={`/clients/${data[0].ownerId}`}>
                     <button type="button">Show Client</button>
                 </Link>
-                <button type="button" onClick={()=>{return handleDelete(id)}}>Delete</button>
+                <button type="button" onClick={()=>handleDelete(id)}>Delete</button>
                 <Link to="/orders">
                     <button type="button">Back</button>
                 </Link>

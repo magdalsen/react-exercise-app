@@ -1,6 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+
+import { supabase } from "../../../src/supabaseClient"
 import { Card, CardProps } from '../Cards/Cards'
 import LoginWrapper from '../LoginWrapper'
 import { Wrapper } from '../Wrapper'
@@ -10,9 +12,13 @@ const Clients = () => {
     const [currentCards, setCurrentCards] = useState<CardProps[]>([]);
     
     const fetchFn = async () => {
-      const response = await fetch('http://localhost:8000/clients');
-      const res = await response.json();
-      const data = await res;
+      const { data: data, error } = await supabase
+        .from('clients')
+        .select('*')
+      // const response = await fetch('http://localhost:8000/clients');
+      // const res = await response.json();
+      // const data = await res;
+      // return data;
       return data;
     }
     const {data:clients, isLoading, error}=useQuery(["clients"],fetchFn);
@@ -23,7 +29,7 @@ const Clients = () => {
     },[clients])
 
 
-    const mutation = useMutation(async ()=>{return await fetchFn()}, {
+    const mutation = useMutation(async ()=>await fetchFn(), {
       onSuccess: () => {
         queryClient.invalidateQueries(["clients"]);
       },
@@ -37,7 +43,7 @@ const Clients = () => {
           setCurrentCards(clients || [])
         }else{
           const newCards=clients?.filter((el: { name: string; surname: string }) => {
-            let equal = (e === el.name + ' ' + el.surname);
+            const equal = (e === el.name + ' ' + el.surname);
             if (e === el.name || e === el.surname || equal){
               return el
             }
