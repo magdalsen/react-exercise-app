@@ -4,7 +4,6 @@ import * as yup from "yup"
 import {InferType} from "yup"
 
 import { useNotificationContext } from "../../contexts/NotificationContext";
-import { useUserContext } from "../../contexts/UserContext";
 import { supabase } from "../../supabaseClient";
 
 import { FormInput } from "./FormInputRegister";
@@ -35,37 +34,31 @@ const yupSchema=yup.object({
 export type FormValues = InferType<typeof yupSchema>;
 
 const FakeRegisterComponent = () => {
-  const {setAlertText,toggleAlert}=useNotificationContext();
-  const {addUser}=useUserContext();
+  const {toggleAlert}=useNotificationContext();
 
     const addClient = async (values:FormValues) => {
-      addUser(values);
-      setAlertText(`Client ${values.email} registered!`);
-      toggleAlert();
-
-      const { data:userData, error } = await supabase.auth.signUp({ 
+      const { data:user, error } = await supabase.auth.signUp({ 
         email: values.email,
         password: values.password
       })
       if (error) {
-        throw error;
-       }
-      // const { data, error } = await supabase
-      // .from('users')
-      // .insert([
-      //   { ...values },
-      // ])
-
-        // const response = await fetch(`http://localhost:8000/register`, {
-        //   method: "POST",
-        //    headers: {"Content-type": "application/json;charset=UTF-8"},
-        //   body: JSON.stringify(values),
-        // });
-        // if (!response.ok) {
-        //   return {};
-        // }
-        // const data = await response.json();
-        return userData;
+        return false;
+      }
+      if (user) {
+        const alert1 = await toggleAlert("User already exist! Use different email");
+        const alert2 = await toggleAlert(`Client ${values.email} registered!`);
+        const { data:userr, error } = await supabase
+        .from('users')
+        .insert([
+          { ...values },
+        ])
+        if (error) {
+          if (alert1===true) return false;
+        }
+        if (userr) {
+          if (alert2===true) return true;
+        }
+      }
     }
 
     const formik = useFormik<FormValues>({
@@ -77,7 +70,7 @@ const FakeRegisterComponent = () => {
       confirm: "",
       image: "https://wallpaper.dog/logob.png",
     },
-    onSubmit: (values:FormValues) => {
+    onSubmit: async (values:FormValues) => {
       addClient(values);
     },
     validationSchema: yupSchema,

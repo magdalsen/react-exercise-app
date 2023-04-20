@@ -5,44 +5,28 @@ import { supabase } from "../supabaseClient";
 import { getSafeContext } from "./getSafeContext";
 import { useNotificationContext } from "./NotificationContext";
 
-export type User = {
-      name: string;
-      surname: string;
-      email: string;
-      password: string;
-      image: string;
-    }
-
 type UserContextProps={
-    users: User[],
-    addUser: (user:User)=>void;
-    login: (username:string,password:string)=>boolean
+    login: (username:string,password:string)=>void;
+    loginData: (username:string,password:string)=>Promise<boolean | undefined>;
     logOut: ()=>void;
     isLoggedIn:boolean;
+    image: string | null;
+    email: string | null;
 }
 
 export const UserContext=createContext<UserContextProps|null>(null)
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoggedIn,setIsLogged]=useState<boolean>(false)
-  const [users, setUsers] = useState<User[]>([]);
-  const {setAlertText}=useNotificationContext();
-  const [image, setImage] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
+  const {toggleAlert}=useNotificationContext();
+  const [image, setImage] = useState<string | null>('');
+  const [email, setEmail] = useState<string | null>('');
 
-  const addUser=(user:User)=>{
-    setUsers(prev=>[...prev, user]);
-  }
-
-  async function getProfile() {
-    const { data:user } = await supabase
-    .from('users')
-    .select('*')
-
+  async function getProfile(email:string) {
     const { data:image } = await supabase
     .from('users')
     .select('*')
-    .eq('id', user[0].id);
+    .eq('email', email);
     setImage(image[0].image);
     return image[0].image;
   }
@@ -53,35 +37,24 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       password: password
      });
      if (error) {
+      if (await toggleAlert("Bad data!")===false) {
         setIsLogged(false);
-        setAlertText('Register first!');
         return false
+      }
+      return
+    }
+     if (data) {
+      if (await toggleAlert("Logged in!")===true) {
+        setIsLogged(true);
+        await getProfile(data.user?.email);
+        setEmail(data.user?.email);
+        return true;
+      }
      }
-     await getProfile();
-     const { data: { user } } = await supabase.auth.getUser();
-     setEmail(user?.email);
   }
 
-  const login=(username:string,password:string)=>{
-    loginData(username,password)
-    setIsLogged(true);
-    setAlertText('Logged in!');
-    return true;
-    
-    // const currentUser=users.find(user=>user.email===username)
-    // if(currentUser && currentUser.password===password){
-    //   if(alertText === '') {
-    //     setIsLogged(false);
-    //     setAlertText(''); //reset 'Exiting'
-    //     return false
-    //   } else {
-    //     setIsLogged(true);
-    //     setAlertText('Logged in!');
-    //     return true;
-    //   }
-    // }
-    // setAlertText('Register first!');
-    // return false;
+  const login= (username:string,password:string)=>{
+    loginData(username,password);
   }
 
   const logOut=async()=>{
@@ -93,7 +66,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
     return (
-      <UserContext.Provider value={{ image,email,users, addUser, login,logOut, isLoggedIn}}>
+      <UserContext.Provider value={{ image,email, login,logOut,loginData, isLoggedIn}}>
         {children}
       </UserContext.Provider>
     );

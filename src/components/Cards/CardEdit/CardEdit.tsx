@@ -25,7 +25,7 @@ const yupSchema=yup.object({
 export type FormValues = InferType<typeof yupSchema>;
 
 const CardEdit = () => {
-    const {alertText,setAlertText,toggleAlert}=useNotificationContext();
+    const {toggleAlert}=useNotificationContext();
     const [data, setData] = useState<FormValues>();
     const { id } = useParams();
     const queryClient = useQueryClient();
@@ -45,22 +45,11 @@ const CardEdit = () => {
         .from('clients')
         .update({ ...values })
         .eq('id', id)
+        if (error) throw error;
         return data;
-
-        // const requestOptions = {
-        //     method: 'PUT',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(values)
-        // };
-        // fetch(`http://localhost:8000/clients/${id}`, requestOptions)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         setData(data);
-        //         return data;
-        //     })
     }
 
-    const mutation = useMutation(async (values:any)=>await updateClient(values), {
+    const mutation = useMutation(async (values:FormValues)=>await updateClient(values), {
       onSuccess: () => {
         queryClient.invalidateQueries(['clients']);
       },
@@ -70,7 +59,9 @@ const CardEdit = () => {
     });
 
     const handleUpdatedData = () => {
-        mutation.mutate(data);
+        if(data) {
+          mutation.mutate(data);
+        }
     }
 
     const goFetch = async () => {
@@ -78,34 +69,23 @@ const CardEdit = () => {
       .from('clients')
       .select('*')
       .eq('id', id)
+      if (error) throw error;
       setInitialValues(data[0]);
     }
 
     useEffect(() => {
         goFetch();
-      // return data && data[0];
-
-        // fetch(`http://localhost:8000/clients/${id}`)
-        //   .then(res => res.json())
-        //   .then((data) => {
-        //     setInitialValues(data);
-        //   })
       }, []);
-
-    const twoFn = () => {
-      handleUpdatedData();
-      toggleAlert();
-    }
 
     const formik = useFormik<FormValues>({
     initialValues,
     enableReinitialize: true,
-    onSubmit: (values:FormValues) => {
-        if (alertText !== '') {
-          updateClient(values);
-          setAlertText(`Client ${values.name} ${values.surname} updated!`);
-        }
-        // alert(`Updated values: ${JSON.stringify(values, null, 2)}`);
+    onSubmit: async (values:FormValues) => {
+      const alert = await toggleAlert(`Client ${values.name} ${values.surname} updated!`);
+      if (alert) {
+        await updateClient(values);
+        handleUpdatedData();
+      }
     },
     validationSchema: yupSchema,
   });
@@ -122,7 +102,7 @@ const CardEdit = () => {
                 <FormInput formik={formik} accessor='town' />
                 <FormInput formik={formik} accessor='subRegion' />
                 <FormInput formik={formik} accessor='phoneNumber' />
-                <button type="submit" onClick={twoFn}>Zapisz zmiany</button>
+                <button type="submit">Zapisz zmiany</button>
                 <Link to={`/clients/${id}`}>
                     <button type="button">Wróć</button>
                 </Link>

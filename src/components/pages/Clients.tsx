@@ -15,11 +15,8 @@ const Clients = () => {
       const { data: data, error } = await supabase
         .from('clients')
         .select('*')
-      // const response = await fetch('http://localhost:8000/clients');
-      // const res = await response.json();
-      // const data = await res;
-      // return data;
-      return data;
+        if (error) throw error;
+        return data;
     }
     const {data:clients, isLoading, error}=useQuery(["clients"],fetchFn);
 
@@ -42,7 +39,7 @@ const Clients = () => {
         if(e===""){
           setCurrentCards(clients || [])
         }else{
-          const newCards=clients?.filter((el: { name: string; surname: string }) => {
+          const newCards=clients?.filter((el) => {
             const equal = (e === el.name + ' ' + el.surname);
             if (e === el.name || e === el.surname || equal){
               return el

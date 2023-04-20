@@ -1,5 +1,6 @@
-import { Input, InputLabel, TextField } from "@mui/material";
+import { InputLabel, TextField } from "@mui/material";
 import { FormikProps } from "formik";
+
 import { FormValues } from "./FakeRegisterComponent";
 
 export const FormInput = ({
@@ -8,8 +9,7 @@ export const FormInput = ({
   }: {
     formik: FormikProps<FormValues>;
     accessor: keyof FormValues;
-  }) => {
-    return (
+  }) => (
         <div>
         <InputLabel id={accessor}>{accessor}</InputLabel>
         <TextField
@@ -28,7 +28,6 @@ export const FormInput = ({
         />
       </div>
     );
-  };
 
 
   // export const FormImage = ({

@@ -30,19 +30,10 @@ const InvoicesForm = () => {
             .from('orders')
             .select('*')
             .eq('id', el.id)
-            // const response = await fetch(`http://localhost:8000/orders/${el.id}`);
-            // const data = await response.json();
-
             const { data:data2 } = await supabase
             .from('orders')
             .update({...data[0], "payed": values})
             .eq('id', el.id)
-            // const response2 = await fetch(`http://localhost:8000/orders/${el.id}`, {
-            //     method: 'PUT',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({...data, "payed": values})
-            // })
-            // const data2 = response2.json();
             return data2;
         })
     }

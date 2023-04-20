@@ -23,7 +23,7 @@ const yupSchema=yup.object({
 export type FormValues = InferType<typeof yupSchema>;
 
 const Form = () => {
-  const {alertText,setAlertText,toggleAlert}=useNotificationContext();
+  const {toggleAlert}=useNotificationContext();
     const addClient = async (values:FormValues) => {
 
       const { data, error } = await supabase
@@ -31,15 +31,7 @@ const Form = () => {
         .insert([
           { ...values },
         ])
-        // const response = await fetch(`http://localhost:8000/clients`, {
-        //   method: "POST",
-        //    headers: {"Content-type": "application/json;charset=UTF-8"},
-        //   body: JSON.stringify(values),
-        // });
-        // if (!response.ok) {
-        //   return {};
-        // }
-        // const data = await response.json();
+        if (error) throw error;
         return data;
     }
 
@@ -54,10 +46,10 @@ const Form = () => {
       subRegion: "",
       phoneNumber: ""
     },
-    onSubmit: (values:FormValues) => {
-      if (alertText !== '') {
+    onSubmit: async (values:FormValues) => {
+      const alert = await toggleAlert(`Client ${values.name} ${values.surname} added!`);
+      if (alert) {
         addClient(values);
-        setAlertText(`Client ${values.name} ${values.surname} added!`);
       }
     },
     validationSchema: yupSchema,
@@ -74,7 +66,7 @@ const Form = () => {
             <FormInput formik={formik} accessor='town' />
             <FormInput formik={formik} accessor='subRegion' />
             <FormInput formik={formik} accessor='phoneNumber' />
-            <button type="submit" onClick={toggleAlert}>Zapisz</button>
+            <button type="submit">Zapisz</button>
         </form>
       </LoginWrapper>
     </>

@@ -3,7 +3,6 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import {InferType} from "yup";
 
-import { useNotificationContext } from "../../contexts/NotificationContext";
 import { useUserContext } from "../../contexts/UserContext";
 import { useAppSelector } from '../../redux/hooks';
 
@@ -25,8 +24,8 @@ const yupSchema=yup.object({
 export type FormValues = InferType<typeof yupSchema>;
 
 const FakeLoginComponent = () => {
-    const {image,email,users, login,logOut,isLoggedIn}=useUserContext();
-    const {toggleAlert}=useNotificationContext();
+    const {image,email,login,logOut,isLoggedIn}=useUserContext();
+    
     const moneySlice = useAppSelector((state) => state.counter.value);
 
     const formik = useFormik<FormValues>({
@@ -35,10 +34,7 @@ const FakeLoginComponent = () => {
       password: ""
     },
     onSubmit: (values:FormValues) => {
-      if (!isLoggedIn) {
-        login(values.email,values.password);
-      }
-      // if (!isLoggedIn) login(values.email,values.password);
+      if (!isLoggedIn) login(values.email,values.password);
     },
     validationSchema: yupSchema,
   });
@@ -58,10 +54,10 @@ const FakeLoginComponent = () => {
                         </> : <>
             <FormInput formik={formik} accessor='email' />
             <FormInput formik={formik} accessor='password' />
-            <button type="submit" onClick={toggleAlert}>Login</button>
+            <button type="submit">Login</button>
           </>}
           <Link to="/register">
-            <button type="button">Register</button>
+            <button type="button" onClick={logOut}>Register</button>
           </Link>
         </form>
     </>

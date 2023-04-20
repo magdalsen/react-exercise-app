@@ -12,8 +12,7 @@ export const FormInput = ({
   }: {
     formik: FormikProps<FormValues>;
     accessor: keyof FormValues;
-  }) => {
-    return (
+  }) => (
         <div>
         <InputLabel id={accessor}>{accessor}</InputLabel>
         <TextField
@@ -31,8 +30,7 @@ export const FormInput = ({
           value={formik.values[accessor]}
         />
       </div>
-    );
-  }
+    )
 
   export const FormSelect = ({
     formik,
@@ -42,8 +40,7 @@ export const FormInput = ({
     formik: FormikProps<FormValues>;
     accessor: keyof FormValues;
     data: CardProps[] | undefined;
-  }) => {
-    return (
+  }) => (
       <FormControl fullWidth>
         <InputLabel id="select-owner-name">Client name</InputLabel>
         <Select
@@ -54,12 +51,11 @@ export const FormInput = ({
           name={accessor}
           onChange={formik.handleChange}
         >
-              {data && data.map((el)=>{return ( 
+              {data && data.map((el)=>( 
                 // eslint-disable-next-line react/jsx-key
                 <MenuItem value={`${el.name} ${el.surname}`}>{`${el.name} ${el.surname}`}</MenuItem>
-              )})}
+              ))}
         </Select>
         <FormHelperText>Select who make order</FormHelperText>
         </FormControl>
     );
-  };

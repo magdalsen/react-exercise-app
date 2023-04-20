@@ -6,9 +6,9 @@ import { getSafeContext } from "./getSafeContext";
 import 'react-toastify/dist/ReactToastify.css';
 
 type NotificationProviderType = {
-    alertText: string,
-    setAlertText: Dispatch<SetStateAction<string>>,
-    toggleAlert: ()=>void
+    // alertText: string,
+    // setAlertText: Dispatch<SetStateAction<string>>,
+    toggleAlert: (alert:string)=>Promise<boolean>
 }
 
 const toastConfig = {
@@ -24,21 +24,19 @@ const toastConfig = {
 export const NotificationContext=createContext<NotificationProviderType|null>(null)
 
 export const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
-  const [alertText, setAlertText] = useState('');
 
-  const toggleAlert = () => {
+  const toggleAlert = async (alert:string) => {
     if(confirm('Are you sure?')) {
-        toast.success(alertText, {...toastConfig, theme: "colored"});
+        toast.success(alert, {...toastConfig, theme: "colored"});
+        return true;
       } else {
-        setAlertText('');
         toast.error('Exit', {...toastConfig, theme: "colored"});
+        return false;
       }
   }
 
     return (
       <NotificationContext.Provider value={{
-        alertText,
-        setAlertText,
         toggleAlert
       }}>
         {children}

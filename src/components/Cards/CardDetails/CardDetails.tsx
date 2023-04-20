@@ -23,7 +23,9 @@ const CardDetails = () => {
     });
 
     useEffect(()=>{
-      mutation2.mutate(data)
+      if(data){
+        mutation2.mutate(`${data.id}`)
+      }
     }, [])
 
     const mutation2 = useMutation(async (id:string)=>await getClientById(id), {
@@ -61,7 +63,7 @@ const CardDetails = () => {
       enabled: !!id
      });
      
-     if(error || !id){
+     if(error || !id || !data){
        return <p>Cannot get orders</p>
      }
 

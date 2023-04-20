@@ -18,15 +18,11 @@ const OrderDetails = () => {
       .from('orders')
       .select('*')
       .eq('id', id)
-      // return data && data[0];
-      // const response =  await fetch(`http://localhost:8000/orders/${id}`)
-      // const order =  await response.json();
       const { data:client, error } = await supabase
       .from('clients')
       .select('*')
       .eq('id', order[0].ownerId)
-      // const response2 = await fetch(`http://localhost:8000/clients/${order.ownerId}`);
-      // const client = await response2.json();
+      if (error) throw error;
       return [order[0],client[0]];
     }
     const {data,isLoading,error}=useQuery(['orders',id],fetchFn);
