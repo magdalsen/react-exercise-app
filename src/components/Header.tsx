@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { useThemeContext } from "..//contexts/context";
+
 import { Button } from "../contexts/DarkModeButton";
+
 import style from "./Header.module.css";
 
-export const Header = () => {
-    return (
+export const Header = () => (
         <header>
             <nav>
                 <ul className={style.header}>
@@ -32,4 +32,3 @@ export const Header = () => {
             <hr />
         </header>
     )
-}

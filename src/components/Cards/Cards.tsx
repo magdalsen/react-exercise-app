@@ -1,6 +1,5 @@
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+
 import style from "./Cards.module.css";
-import { UserProvider } from "../../contexts/UserContext";
 
 export interface CardProps {
   id:number;
@@ -14,8 +13,7 @@ export interface CardProps {
   phoneNumber:string
 }
 
-export const Card = ({imgSrc, name, surname, street, postCode, town, phoneNumber}:CardProps) => {
-    return (
+export const Card = ({imgSrc, name, surname, street, postCode, town, phoneNumber}:CardProps) => (
         <>
           <div className={style.card}>
             <div className={style.dot}><img src={imgSrc} className={style.avatar} alt="avatar" /></div>
@@ -29,4 +27,3 @@ export const Card = ({imgSrc, name, surname, street, postCode, town, phoneNumber
           </div>
         </>
     )
-}

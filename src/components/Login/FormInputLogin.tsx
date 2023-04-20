@@ -9,8 +9,7 @@ export const FormInput = ({
   }: {
     formik: FormikProps<FormValues>;
     accessor: keyof FormValues;
-  }) => {
-    return (
+  }) => (
         <div>
         <InputLabel id={accessor}>{accessor}</InputLabel>
         <TextField
@@ -29,4 +28,3 @@ export const FormInput = ({
         />
       </div>
     );
-  };
