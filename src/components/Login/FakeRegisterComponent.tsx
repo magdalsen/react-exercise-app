@@ -50,10 +50,10 @@ const FakeRegisterComponent = () => {
         .insert([
           { ...values },
         ])
-        if (error) {
+        if (error != null) {
           if (await toggleAlert("User already exist! Use different email")===true) return false;
         }
-        if (userr) {
+        if (userr === null) {
           if (await toggleAlert(`Client ${values.email} registered!`)===true) return true;
         }
       }
