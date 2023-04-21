@@ -51,8 +51,7 @@ const FormOrder = () => {
       payed: false,
     },
     onSubmit: async (values:FormValues) => {
-      const alert = await toggleAlert(`Order ${values.title} added!`);
-      if (alert) {
+      if (await toggleAlert(`Order ${values.title} added!`)) {
         const ownerIdFilter = data && data.filter((el: { name: string; surname: string; id: number; })=>{
           if (`${el.name} ${el.surname}` === values.orderOwner) {
               return el.id;

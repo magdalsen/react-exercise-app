@@ -81,8 +81,7 @@ const CardEdit = () => {
     initialValues,
     enableReinitialize: true,
     onSubmit: async (values:FormValues) => {
-      const alert = await toggleAlert(`Client ${values.name} ${values.surname} updated!`);
-      if (alert) {
+      if (await toggleAlert(`Client ${values.name} ${values.surname} updated!`)) {
         await updateClient(values);
         handleUpdatedData();
       }

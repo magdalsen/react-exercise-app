@@ -42,21 +42,19 @@ const FakeRegisterComponent = () => {
         password: values.password
       })
       if (error) {
-        return false;
+        throw error;
       }
       if (user) {
-        const alert1 = await toggleAlert("User already exist! Use different email");
-        const alert2 = await toggleAlert(`Client ${values.email} registered!`);
         const { data:userr, error } = await supabase
         .from('users')
         .insert([
           { ...values },
         ])
         if (error) {
-          if (alert1===true) return false;
+          if (await toggleAlert("User already exist! Use different email")===true) return false;
         }
         if (userr) {
-          if (alert2===true) return true;
+          if (await toggleAlert(`Client ${values.email} registered!`)===true) return true;
         }
       }
     }

@@ -47,8 +47,7 @@ const Form = () => {
       phoneNumber: ""
     },
     onSubmit: async (values:FormValues) => {
-      const alert = await toggleAlert(`Client ${values.name} ${values.surname} added!`);
-      if (alert) {
+      if (await toggleAlert(`Client ${values.name} ${values.surname} added!`)) {
         addClient(values);
       }
     },
