@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 
 import { supabase } from "../../../src/supabaseClient"
 import { Card, CardProps } from '../Cards/Cards'
-import LoginWrapper from '../LoginWrapper'
-import { Wrapper } from '../Wrapper'
+import LoginWrapper from '../LoginWrapper/LoginWrapper'
+import { Wrapper } from '../Wrapper/Wrapper'
 
 const Clients = () => {
-    const queryClient = useQueryClient();
     const [currentCards, setCurrentCards] = useState<CardProps[]>([]);
     
     const fetchFn = async () => {
@@ -22,18 +21,7 @@ const Clients = () => {
 
     useEffect(()=>{
       setCurrentCards(clients || []);
-      mutation.mutate(clients || []);
     },[clients])
-
-
-    const mutation = useMutation(async ()=>await fetchFn(), {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["clients"]);
-      },
-      onError: () => {
-        throw new Error("Something went wrong :(");
-      }
-    });   
 
     const filterFn = (e:string) => {
         if(e===""){

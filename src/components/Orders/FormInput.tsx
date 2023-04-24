@@ -52,8 +52,7 @@ export const FormInput = ({
           onChange={formik.handleChange}
         >
               {data && data.map((el)=>( 
-                // eslint-disable-next-line react/jsx-key
-                <MenuItem value={`${el.name} ${el.surname}`}>{`${el.name} ${el.surname}`}</MenuItem>
+                <MenuItem key={el.id} value={`${el.name} ${el.surname}`}>{`${el.name} ${el.surname}`}</MenuItem>
               ))}
         </Select>
         <FormHelperText>Select who make order</FormHelperText>

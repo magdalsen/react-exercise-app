@@ -1,28 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useMutation,useQueryClient } from "@tanstack/react-query";
+import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
-import * as yup from "yup"
 import {InferType} from "yup"
 
 import { useNotificationContext } from "../../../contexts/NotificationContext";
 import { supabase } from "../../../supabaseClient";
+import { yupSchemaCardEdit } from "../../validations/validations";
 import { FormInput } from "../FormInput";
 
 import style from "../CardForm/CardForm.module.css"
 
-const yupSchema=yup.object({
-    imgSrc: yup.string().required("Obrazek musi być"),
-    name: yup.string().required("Uzupełnij imię!"),
-    surname: yup.string().required("Uzupełnij nazwisko!"),
-    street: yup.string().required("Uzupełnij ulicę!"),
-    postCode: yup.string().matches(/[0-9]{2}-[0-9]{3}/),
-    town: yup.string().required("Uzupełnij miasto!"),
-    subRegion: yup.string().min(3).optional(),
-    phoneNumber: yup.string().matches(/\+[0-9]{9}/)
-  })
-
-export type FormValues = InferType<typeof yupSchema>;
+export type FormValues = InferType<typeof yupSchemaCardEdit>;
 
 const CardEdit = () => {
     const {toggleAlert}=useNotificationContext();
@@ -74,8 +63,10 @@ const CardEdit = () => {
     }
 
     useEffect(() => {
-        goFetch();
-      }, []);
+      goFetch();
+    }, []);
+
+    const {data:clients,isLoading,error}=useQuery(['clients'],goFetch);
 
     const formik = useFormik<FormValues>({
     initialValues,
@@ -86,8 +77,16 @@ const CardEdit = () => {
         handleUpdatedData();
       }
     },
-    validationSchema: yupSchema,
+    validationSchema: yupSchemaCardEdit,
   });
+
+  if(error || !id || !clients){
+    return <p>Cannot get client</p>
+  }
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
     
     return (
         <>

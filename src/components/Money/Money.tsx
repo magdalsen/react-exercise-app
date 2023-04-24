@@ -2,22 +2,15 @@ import { Link } from "react-router-dom";
 import { InputLabel, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import {InferType} from "yup";
-import * as yup from "yup";
 
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { decrementByAmount, incrementByAmount } from '../redux/moneySlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { decrementByAmount, incrementByAmount } from '../../redux/moneySlice';
+import LoginWrapper from "../LoginWrapper/LoginWrapper";
+import { yupSchemaMoney } from "../validations/validations";
 
-import LoginWrapper from "./LoginWrapper";
-
-import style from "./Login/FakeLoginComponent.module.css";
-
-const yupSchema=yup.object({
-    money: yup.number()
-        .moreThan(0)
-        .required('Money value required!')
-  })
+import style from "../Login/FakeLoginComponent.module.css";
   
-  export type FormValues = InferType<typeof yupSchema>;
+export type FormValues = InferType<typeof yupSchemaMoney>;
 
 const Money = () => {
     const moneySlice = useAppSelector((state) => state.counter.value);
@@ -30,7 +23,7 @@ const Money = () => {
         onSubmit: (values:FormValues) => {
             values.money;
         },
-        validationSchema: yupSchema,
+        validationSchema: yupSchemaMoney,
       });
 
     return (

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import { useAppSelector } from '../../redux/hooks';
-import LoginWrapper from '../LoginWrapper'
+import LoginWrapper from '../LoginWrapper/LoginWrapper'
 
 import InvoicesForm from './InvoicesForm';
 import InvoicesWrapper from './InvoicesWrapper';
@@ -18,8 +18,7 @@ const Invoices = () => {
             <div className={style.invoiceBox}>
               <div className={style.invoiceTitle}>Invoice</div>
               <div className={style.invoiceData}>{orderSlice.orders.map((el, i)=>(
-                // eslint-disable-next-line react/jsx-key
-                <Link to={`/orders/${el.id}`}>
+                <Link key={el.id} to={`/orders/${el.id}`}>
                   <div>{i+1}. {el.title}</div>
                 </Link>
               ))}</div>

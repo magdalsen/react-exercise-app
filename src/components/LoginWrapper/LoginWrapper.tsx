@@ -1,4 +1,4 @@
-import { useUserContext } from "../contexts/UserContext";
+import { useUserContext } from "../../contexts/UserContext";
 
 const LoginWrapper = ({children}:{children:React.ReactNode}) => {
     const {isLoggedIn}=useUserContext()

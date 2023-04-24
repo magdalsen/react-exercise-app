@@ -1,26 +1,15 @@
 import { useFormik } from "formik";
-import * as yup from "yup"
 import {InferType} from "yup"
 
 import { supabase } from "../../../../src/supabaseClient";
-import LoginWrapper from "../../../components/LoginWrapper";
 import { useNotificationContext } from "../../../contexts/NotificationContext";
+import LoginWrapper from "../../LoginWrapper/LoginWrapper";
+import { yupSchemaCardForm } from "../../validations/validations";
 import { FormInput } from "../FormInput";
 
 import style from "./CardForm.module.css"
 
-const yupSchema=yup.object({
-  imgSrc: yup.string().required("Obrazek musi być"),
-  name: yup.string().required("Uzupełnij imię!"),
-  surname: yup.string().required("Uzupełnij nazwisko!"),
-  street: yup.string().required("Uzupełnij ulicę!"),
-  postCode: yup.string().matches(/[0-9]{2}-[0-9]{3}/),
-  town: yup.string().required("Uzupełnij miasto!"),
-  subRegion: yup.string().min(3).optional(),
-  phoneNumber: yup.string().matches(/\+[0-9]{9}/)
-})
-
-export type FormValues = InferType<typeof yupSchema>;
+export type FormValues = InferType<typeof yupSchemaCardForm>;
 
 const Form = () => {
   const {toggleAlert}=useNotificationContext();
@@ -51,7 +40,7 @@ const Form = () => {
         addClient(values);
       }
     },
-    validationSchema: yupSchema,
+    validationSchema: yupSchemaCardForm,
   });
 
   return (

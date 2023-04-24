@@ -1,37 +1,16 @@
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
-import * as yup from "yup"
 import {InferType} from "yup"
 
 import { useNotificationContext } from "../../contexts/NotificationContext";
 import { supabase } from "../../supabaseClient";
+import { yupSchemaFakeRegister } from "../validations/validations";
 
 import { FormInput } from "./FormInputRegister";
 
 import style from "../Cards/CardForm/CardForm.module.css"
 
-const yupSchema=yup.object({
-  name: yup.string().min(3, 'Min 3 characters!').required("Name required!"),
-  surname: yup.string().min(2, 'Min 2 characters!').required("Surname required!"),
-  email: yup.string().email('Invalid email').required('E-mail required!'),
-  password: yup
-    .string()
-    .min(8, 'Password must be 8 characters long')
-    .matches(/[0-9]/, 'Password requires a number')
-    .matches(/[a-z]/, 'Password requires a lowercase letter')
-    .matches(/[A-Z]/, 'Password requires an uppercase letter')
-    .matches(/[^\w]/, 'Password requires a symbol')
-    .required('Password required!'),
-  confirm: yup.string()
-    .oneOf([yup.ref('password')], 'Must match "password" field value')
-    .required('Confirm password required!'),
-  // file: yup.object({
-  //   file: yup.mixed().required('Avatar required!')
-  // }),
-  image: yup.string().required("Avatar required!"),
-})
-
-export type FormValues = InferType<typeof yupSchema>;
+export type FormValues = InferType<typeof yupSchemaFakeRegister>;
 
 const FakeRegisterComponent = () => {
   const {toggleAlert}=useNotificationContext();
@@ -71,7 +50,7 @@ const FakeRegisterComponent = () => {
     onSubmit: async (values:FormValues) => {
       addClient(values);
     },
-    validationSchema: yupSchema,
+    validationSchema: yupSchemaFakeRegister,
   });
 
   return (

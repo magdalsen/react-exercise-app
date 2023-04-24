@@ -1,18 +1,16 @@
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { addInvoiceElement, removeInvoiceElementById } from '../../redux/orderSlice'
 import { supabase } from '../../supabaseClient'
-import LoginWrapper from '../LoginWrapper'
+import LoginWrapper from '../LoginWrapper/LoginWrapper'
 import { Order, OrderProps } from '../Orders/Order'
-import { Wrapper } from '../Wrapper'
+import { Wrapper } from '../Wrapper/Wrapper'
 
 import style from "./Orders.module.css"
 
 const Orders = () => {
-  const queryClient = useQueryClient();
   const markedOrders=useAppSelector(state=>state.invoice.orders)
   const dispatch = useAppDispatch();
 
@@ -27,21 +25,6 @@ const Orders = () => {
         return {orders,clients};
       }
       const {data, isLoading, error}=useQuery(['orders', 'clients'],fetchFn);
-
-      const mutation = useMutation(async ()=>await fetchFn(), {
-        onSuccess: () => {
-          queryClient.invalidateQueries(["orders", "clients"]);
-        },
-        onError: () => {
-          throw new Error("Something went wrong :(");
-        }
-      });
-  
-      useEffect(() => {
-        if (data) {
-          mutation.mutate(data?.orders, data?.clients);
-        }
-      }, []);
 
       const handleTick=(e:React.ChangeEvent<HTMLInputElement>, el: OrderProps) => {
         e.target.checked ? dispatch(addInvoiceElement({id: el.id, title: el.title})) : dispatch(removeInvoiceElementById(el.id))
@@ -76,7 +59,7 @@ const Orders = () => {
                   </div>
                   </div>
                 })}
-                <Link to={`/orders/${el.id}`}>
+                <Link key={el.id} to={`/orders/${el.id}`}>
                   <button type="button">Details</button>
                 </Link>
               </div>

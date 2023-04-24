@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { confirmAlert } from "react-confirm-alert";
 import { Link} from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -6,8 +5,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { deleteOrder } from "../../../api/clients";
 import { supabase } from "../../../supabaseClient";
-
-import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const OrderDetails = () => {
     const { id } = useParams();
@@ -27,20 +24,7 @@ const OrderDetails = () => {
     }
     const {data,isLoading,error}=useQuery(['orders',id],fetchFn);
 
-    useEffect(()=>{
-      mutation.mutate(data && data[0] || [])
-    }, [data])
-
-       const mutation = useMutation(async ()=>await fetchFn(), {
-        onSuccess: () => {
-          queryClient.invalidateQueries(['orders',id]);
-        },
-        onError: () => {
-          throw new Error("Something went wrong :(");
-        }
-      });
-
-      const mutation2 = useMutation(async (id:string)=>await deleteOrder(id), {
+      const mutation = useMutation(async (id:string)=>await deleteOrder(id), {
         onSuccess: () => {
           queryClient.invalidateQueries();
         },
@@ -56,7 +40,7 @@ const OrderDetails = () => {
             buttons: [
               {
                 label: 'Yes',
-                onClick: () => mutation2.mutate(id)
+                onClick: () => mutation.mutate(id)
               },
               {
                 label: 'No',

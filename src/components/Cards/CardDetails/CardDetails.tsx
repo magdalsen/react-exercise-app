@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { confirmAlert } from 'react-confirm-alert';
 import { Link} from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -6,7 +5,6 @@ import { useMutation,useQuery,useQueryClient } from '@tanstack/react-query'
 
 import { deletePerson,getClientById } from "../../../api/clients";
 
-import 'react-confirm-alert/src/react-confirm-alert.css';
 import style from "./CardDetails.module.css";
 
 const CardDetails = () => {
@@ -15,28 +13,12 @@ const CardDetails = () => {
 
     const mutation = useMutation(async (id:string)=>await deletePerson(id), {
       onSuccess: () => {
-        queryClient.invalidateQueries();
+        queryClient.invalidateQueries({ queryKey: ['client',id] });
       },
       onError: ()=>{
         throw new Error("Something went wrong :(");
       }
     });
-
-    useEffect(()=>{
-      if(data){
-        mutation2.mutate(`${data.id}`)
-      }
-    }, [])
-
-    const mutation2 = useMutation(async (id:string)=>await getClientById(id), {
-      onSuccess: () => {
-        queryClient.invalidateQueries();
-      },
-      onError: ()=>{
-        throw new Error("Something went wrong :(");
-      }
-    });
-
 
     const handleDelete = async (id:string) => {
         confirmAlert({
@@ -64,7 +46,7 @@ const CardDetails = () => {
      });
      
      if(error || !id || !data){
-       return <p>Cannot get orders</p>
+       return <p>Cannot get client</p>
      }
 
      if (isLoading) {

@@ -8,14 +8,15 @@ import {
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import ErrorBoundary from './components/ErrorBoundary';
-import { Header } from './components/Header';
+import { Header } from './components/Header/Header';
 import Invoices from './components/Invoices/Invoices';
-import Money from './components/Money';
+import Money from './components/Money/Money';
 import { NotificationProvider } from './contexts/NotificationContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { UserProvider } from './contexts/UserContext';
 import { useAppSelector } from './redux/hooks';
 
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import './App.css'
 const FakeLoginComponent = lazy(() => import("./components/Login/FakeLoginComponent"));
 const FakeRegisterComponent = lazy(() => import("./components/Login/FakeRegisterComponent"));

@@ -2,39 +2,29 @@ import { useState } from "react";
 import { InputLabel, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import {InferType} from "yup";
-import * as yup from "yup";
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { decrementByAmount } from '../../redux/moneySlice';
 import { supabase } from "../../supabaseClient";
-import LoginWrapper from "../LoginWrapper";
+import LoginWrapper from "../LoginWrapper/LoginWrapper";
+import { yupSchemaInvoices } from "../validations/validations";
 
 import style from "../Login/FakeLoginComponent.module.css";
-
-const yupSchema=yup.object({
-    money: yup.number()
-        .moreThan(0)
-        .required('Money value required!')
-  })
   
-  export type FormValues = InferType<typeof yupSchema>;
+export type FormValues = InferType<typeof yupSchemaInvoices>;
 
 const InvoicesForm = () => {
     const orderSlice = useAppSelector((state) => state.invoice);
     const dispatch = useAppDispatch();
     const [clicked, setClick] = useState<boolean>(false)
 
-    const updateOrders = (values:boolean) => {    
+    const updateOrders = (values:boolean) => {
         orderSlice.orders.map(async (el)=>{
-            const { data:data } = await supabase
+            const { data } = await supabase
             .from('orders')
-            .select('*')
+            .update({"payed": values})
             .eq('id', el.id)
-            const { data:data2 } = await supabase
-            .from('orders')
-            .update({...data[0], "payed": values})
-            .eq('id', el.id)
-            return data2;
+            return data;
         })
     }
 
@@ -51,7 +41,7 @@ const InvoicesForm = () => {
         onSubmit: (values:FormValues) => {
             values.money;
         },
-        validationSchema: yupSchema,
+        validationSchema: yupSchemaInvoices,
       });
 
     return (

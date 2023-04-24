@@ -1,25 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { useFormik } from "formik";
-import * as yup from "yup"
 import {InferType} from "yup"
 
-import LoginWrapper from "../../../components/LoginWrapper";
 import { useNotificationContext } from "../../../contexts/NotificationContext";
 import { supabase } from "../../../supabaseClient";
 import { CardProps } from "../../Cards/Cards";
+import LoginWrapper from "../../LoginWrapper/LoginWrapper";
+import { yupSchemaOrderForm } from "../../validations/validations";
 import { FormInput, FormSelect } from "../FormInput";
 
 import style from "../../Cards/CardForm/CardForm.module.css";
 
-const yupSchema=yup.object({
-  title: yup.string().required("Uzupełnij tytuł!"),
-  amount: yup.number().required("Uzupełnij ilość!"),
-  orderOwner: yup.string().required("Uzupełnij ulicę!"),
-  phoneNumber: yup.string().matches(/\+[0-9]{9}/),
-  payed: yup.boolean()
-})
-
-export type FormValues = InferType<typeof yupSchema>;
+export type FormValues = InferType<typeof yupSchemaOrderForm>;
 
 const FormOrder = () => {
   const {toggleAlert}=useNotificationContext();
@@ -62,7 +54,7 @@ const FormOrder = () => {
         addOrder({...values, ...id});
       }
     },
-    validationSchema: yupSchema,
+    validationSchema: yupSchemaOrderForm,
   });
 
   if(error){

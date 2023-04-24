@@ -1,27 +1,16 @@
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
-import * as yup from "yup";
 import {InferType} from "yup";
 
 import { useUserContext } from "../../contexts/UserContext";
 import { useAppSelector } from '../../redux/hooks';
+import { yupSchemaFakeLogin } from "../validations/validations";
 
 import { FormInput } from "./FormInputLogin";
 
 import style from "./FakeLoginComponent.module.css";
 
-const yupSchema=yup.object({
-  email: yup.string().email('Invalid email').required('E-mail required!'),
-  password: yup.string()
-    .min(8, 'Password must be 8 characters long')
-    .matches(/[0-9]/, 'Password requires a number')
-    .matches(/[a-z]/, 'Password requires a lowercase letter')
-    .matches(/[A-Z]/, 'Password requires an uppercase letter')
-    .matches(/[^\w]/, 'Password requires a symbol')
-    .required('Password required!')
-})
-
-export type FormValues = InferType<typeof yupSchema>;
+export type FormValues = InferType<typeof yupSchemaFakeLogin>;
 
 const FakeLoginComponent = () => {
     const {image,email,login,logOut,isLoggedIn}=useUserContext();
@@ -36,7 +25,7 @@ const FakeLoginComponent = () => {
     onSubmit: (values:FormValues) => {
       if (!isLoggedIn) login(values.email,values.password);
     },
-    validationSchema: yupSchema,
+    validationSchema: yupSchemaFakeLogin,
   });
 
   return (
