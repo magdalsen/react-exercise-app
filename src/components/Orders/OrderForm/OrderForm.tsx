@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import {InferType} from "yup"
 
@@ -15,6 +15,7 @@ export type FormValues = InferType<typeof yupSchemaOrderForm>;
 
 const FormOrder = () => {
   const {toggleAlert}=useNotificationContext();
+  const queryClient = useQueryClient();
     const addOrder = async (values:FormValues) => {
       const { data, error } = await supabase
       .from('orders')
@@ -51,10 +52,20 @@ const FormOrder = () => {
         });
         const ownerId = ownerIdFilter && ownerIdFilter[0].id;
         const id = {ownerId};
-        addOrder({...values, ...id});
+        // addOrder({...values, ...id});
+        mutation.mutate({...values, ...id});
       }
     },
     validationSchema: yupSchemaOrderForm,
+  });
+
+  const mutation = useMutation(async (values:FormValues)=>await addOrder(values), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["orders"]);
+    },
+    onError: ()=>{
+      throw error;
+    }
   });
 
   if(error){

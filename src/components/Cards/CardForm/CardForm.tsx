@@ -1,3 +1,4 @@
+import { useMutation,useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import {InferType} from "yup"
 
@@ -13,6 +14,7 @@ export type FormValues = InferType<typeof yupSchemaCardForm>;
 
 const Form = () => {
   const {toggleAlert}=useNotificationContext();
+  const queryClient = useQueryClient();
     const addClient = async (values:FormValues) => {
 
       const { data, error } = await supabase
@@ -37,10 +39,21 @@ const Form = () => {
     },
     onSubmit: async (values:FormValues) => {
       if (await toggleAlert(`Client ${values.name} ${values.surname} added!`)) {
-        addClient(values);
+        // addClient(values);
+        mutation.mutate(values);
       }
     },
     validationSchema: yupSchemaCardForm,
+  });
+
+  const mutation = useMutation(async (values:FormValues)=>await addClient(values), {
+    onSuccess: () => {
+      // rewalidacja i pobranie ponownie zapytania pod kluczem clients
+      queryClient.invalidateQueries(["clients"]);
+    },
+    onError: (error)=>{
+      throw error;
+    }
   });
 
   return (

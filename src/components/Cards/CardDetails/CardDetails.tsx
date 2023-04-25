@@ -13,7 +13,7 @@ const CardDetails = () => {
 
     const mutation = useMutation(async (id:string)=>await deletePerson(id), {
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['client',id] });
+        queryClient.invalidateQueries({ queryKey: ['clients',id] });
       },
       onError: ()=>{
         throw new Error("Something went wrong :(");
@@ -38,7 +38,7 @@ const CardDetails = () => {
           
      }
 
-     const {data,isLoading,error}=useQuery(['client',id],()=>{
+     const {data,isLoading,error}=useQuery(['clients',id],()=>{
       if(id)
       return getClientById(id)
     },{

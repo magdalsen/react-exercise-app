@@ -16,18 +16,18 @@ const FakeRegisterComponent = () => {
   const {toggleAlert}=useNotificationContext();
 
     const addClient = async (values:FormValues) => {
-      const { data:user, error } = await supabase.auth.signUp({ 
+      const { data, error } = await supabase.auth.signUp({ 
         email: values.email,
         password: values.password
       })
       if (error) {
         throw error;
       }
-      if (user) {
+      if (data && data.user) {
         const { data:userr, error } = await supabase
         .from('users')
         .insert([
-          { ...values },
+          { id: data.user?.id, name: values.name, surname: values.surname, image: values.image }
         ])
         if (error != null) {
           if (await toggleAlert("User already exist! Use different email")===true) return false;

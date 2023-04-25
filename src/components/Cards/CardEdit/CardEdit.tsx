@@ -15,7 +15,6 @@ export type FormValues = InferType<typeof yupSchemaCardEdit>;
 
 const CardEdit = () => {
     const {toggleAlert}=useNotificationContext();
-    const [data, setData] = useState<FormValues>();
     const { id } = useParams();
     const queryClient = useQueryClient();
     const [initialValues, setInitialValues] = useState({
@@ -47,12 +46,6 @@ const CardEdit = () => {
       }
     });
 
-    const handleUpdatedData = () => {
-        if(data) {
-          mutation.mutate(data);
-        }
-    }
-
     const goFetch = async () => {
       const { data, error } = await supabase
       .from('clients')
@@ -74,7 +67,7 @@ const CardEdit = () => {
     onSubmit: async (values:FormValues) => {
       if (await toggleAlert(`Client ${values.name} ${values.surname} updated!`)) {
         await updateClient(values);
-        handleUpdatedData();
+        mutation.mutate(values);
       }
     },
     validationSchema: yupSchemaCardEdit,

@@ -39,7 +39,8 @@ export const yupSchemaOrderForm=yup.object({
     amount: yup.number().required("Uzupełnij ilość!"),
     orderOwner: yup.string().required("Uzupełnij ulicę!"),
     phoneNumber: yup.string().matches(/\+[0-9]{9}/),
-    payed: yup.boolean()
+    payed: yup.boolean(),
+    ownerId: yup.number()
   })
 
   export const yupSchemaFakeLogin=yup.object({

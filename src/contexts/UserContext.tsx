@@ -10,7 +10,7 @@ type UserContextProps={
     loginData: (username:string,password:string)=>Promise<boolean | undefined>;
     logOut: ()=>void;
     isLoggedIn:boolean;
-    image: string | null;
+    image: string | undefined;
     email: string | null;
 }
 
@@ -19,20 +19,20 @@ export const UserContext=createContext<UserContextProps|null>(null)
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoggedIn,setIsLogged]=useState<boolean>(false)
   const {toggleAlert}=useNotificationContext();
-  const [image, setImage] = useState<string | null>('');
-  const [email, setEmail] = useState<string | null>('');
+  const [image, setImage] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
 
-  async function getProfile(email:string) {
+  async function getProfile(id:string | undefined) {
     const { data:image } = await supabase
     .from('users')
     .select('*')
-    .eq('email', email);
+    .eq('id', id);
     setImage(image[0].image);
     return image[0].image;
   }
 
   const loginData = async (username:string,password:string) => {
-    const { data,error } = await supabase.auth.signInWithPassword({ 
+    const { data:userData,error } = await supabase.auth.signInWithPassword({ 
       email: username,
       password: password
      });
@@ -43,11 +43,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       }
       return
     }
-     if (data) {
+     if (userData) {
       if (await toggleAlert("Logged in!")===true) {
         setIsLogged(true);
-        await getProfile(data.user?.email);
-        setEmail(data.user?.email);
+        await getProfile(userData.user?.id);
+        setEmail(userData.user?.email);
         return true;
       }
      }
